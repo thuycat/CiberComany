@@ -1,0 +1,43 @@
+@import  'scss/scss_lib';
+
+.user-content {
+  @extend %transition;
+  position: absolute;
+  top: 0;
+  right: -999px;
+  width: 300px;
+  background-color: #d6d6d6;
+  &.show {
+    right: 0;
+  }
+  .user-title {
+    background-color: #0866e4;
+    color: #fff;
+    height: 37px;
+    line-height: 37px;
+    p {
+      float: right;
+      margin-bottom: 0;
+    }
+    .user-close {
+      float: left;
+    }
+  }
+  .list-item {
+    li {
+      a {
+        display: block;
+        color: #000;
+        padding: 5px 20px;
+      }
+    }
+  }
+}
+
+.toggle_level_3 {
+  position: absolute;
+  z-index: 9;
+  bottom: 5px;
+  right: 20px;
+  cursor: pointer;
+}

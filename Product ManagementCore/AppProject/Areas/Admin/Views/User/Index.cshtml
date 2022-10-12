@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/ShareAdmin/_LayoutAdmin.cshtml";
+}
+
+
+<style>
+    .title_icon {
+        font-size: 19px;
+        color: red;
+        font-weight: bold;
+        text-decoration: underline;
+        margin: 5px 10px 20px;
+    }
+
+    .statistic {
+        padding-top: 5px;
+    }
+
+    .select-search {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .select-flex1 {
+        flex: 1;
+        margin-right: 10px;
+    }
+
+    .content-flex.col-sm-3 {
+        text-align: right;
+    }
+
+    .zone_search {
+        margin-bottom: 20px
+    }
+</style>
+<div class="smgrid" data-title="user" data-grid="grid_User"
+     data-form="/Admin/User/FormAdd" data-formwidth="1024" data-view="/Admin/User/FormView" data-controller="/Admin/User/">
+    <div class="zone_search">
+
+        <div class="title_icon">
+            User list
+        </div>
+        <div class="row">
+            <div class="content-flex col-sm-12">
+                <button type="button" class="k-primary k-button btnadd">Thêm mới</button>
+            </div>
+        </div>
+
+    </div>
+    <div id="grid_User">
+    </div>
+</div>
+@section javascript{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $("#grid_User").siKendoGrid({
+                UrlPost: "/Admin/User/GetList",
+                //UrlPost: "/api/APILoaiMenu/GetListLoaiMenu",
+                pageSize: 20,
+                page: 1,
+                //Sort: [{ dir: "asc", field: "userSTT" }],
+                isColumSTT: true,
+                columns: [
+                    {
+                        field: "name",
+                        title: "User name",
+                        template: function (o) {
+                            return '<span class="view" data-id="' + o.id + '">' + DisableXssInJs(o.name) + '</span>';
+                        }
+                    },
+                    {
+                        field: "loginName",
+                        title: "Login name",
+                        template: function (o) {
+                            return '<span class="view" data-id="' + o.id + '">' + DisableXssInJs(o.loginName) + '</span>';
+                        }
+                    }],
+                parameterPlus: function (option) {
+                    option["isSortAsc"] = false;
+                    option["FieldSort"] = "Id";
+
+                },
+                dataBound: function () {
+                    $("#grid_User .k-grid-content").css(
+                        { "max-height": $("#panel-center").height() - $(".k-grid-pager.k-floatwrap").outerHeight() - $(".k-grid-header-wrap").outerHeight() - $(".zone_search").outerHeight() - $(".title_icon").outerHeight() - 3 + 'px' });
+                },
+                //group: "menuLoai"
+            });
+        });
+    </script>
+}
+
+

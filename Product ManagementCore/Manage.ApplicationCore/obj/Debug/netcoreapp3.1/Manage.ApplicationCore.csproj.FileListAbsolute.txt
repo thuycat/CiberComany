@@ -1,0 +1,12 @@
+D:\ProjectNet\Product ManagementCore\Manage.ApplicationCore\obj\Debug\netcoreapp3.1\Manage.ApplicationCore.csprojAssemblyReference.cache
+D:\ProjectNet\Product ManagementCore\Manage.ApplicationCore\obj\Debug\netcoreapp3.1\Manage.ApplicationCore.AssemblyInfoInputs.cache
+D:\ProjectNet\Product ManagementCore\Manage.ApplicationCore\obj\Debug\netcoreapp3.1\Manage.ApplicationCore.AssemblyInfo.cs
+D:\ProjectNet\Product ManagementCore\Manage.ApplicationCore\obj\Debug\netcoreapp3.1\Manage.ApplicationCore.csproj.CoreCompileInputs.cache
+D:\ProjectNet\Product ManagementCore\Manage.ApplicationCore\bin\Debug\netcoreapp3.1\Manage.ApplicationCore.deps.json
+D:\ProjectNet\Product ManagementCore\Manage.ApplicationCore\bin\Debug\netcoreapp3.1\Manage.ApplicationCore.dll
+D:\ProjectNet\Product ManagementCore\Manage.ApplicationCore\bin\Debug\netcoreapp3.1\Manage.ApplicationCore.pdb
+D:\ProjectNet\Product ManagementCore\Manage.ApplicationCore\obj\Debug\netcoreapp3.1\Manage.ApplicationCore.dll
+D:\ProjectNet\Product ManagementCore\Manage.ApplicationCore\obj\Debug\netcoreapp3.1\Manage.ApplicationCore.pdb
+D:\ProjectNet\Product ManagementCore\Manage.ApplicationCore\bin\Debug\netcoreapp3.1\EFDataBase.dll
+D:\ProjectNet\Product ManagementCore\Manage.ApplicationCore\bin\Debug\netcoreapp3.1\EFDataBase.pdb
+D:\ProjectNet\Product ManagementCore\Manage.ApplicationCore\obj\Debug\netcoreapp3.1\Manage.ApplicationCore.csproj.CopyComplete

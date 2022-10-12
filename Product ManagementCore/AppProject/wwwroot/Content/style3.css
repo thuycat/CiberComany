@@ -1,0 +1,35 @@
+@media screen and (max-width: 799px) {
+		.level_3-wrapper {
+			display:none;
+			}
+		}
+.level_3-wrapper, .main-content-inner {
+  transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+}
+
+/* break point */
+.level_3-wrapper {
+  z-index: 5;
+  height: auto;
+}
+
+.main-content-wrapper {
+  z-index: 7;
+  background-color: #fff;
+}
+
+.main-content-wrapper.down {
+  top: 131px;
+}
+
+.main-content-wrapper .main-content {
+  border-bottom: none;
+}
+
+.level_3 {
+    top: -300px;
+    border-bottom: solid 1px #7c7c7c;
+}

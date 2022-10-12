@@ -1,0 +1,145 @@
+﻿
+/*Báo cáo*/
+.smfrmbaocao .zone_search {
+    border-bottom: 2px solid #0094ff;
+}
+
+.zonehead {
+    text-align: center;
+    margin: 5px;
+}
+
+    .zonehead p {
+        margin: 0;
+        text-align: center;
+    }
+
+table.smtable, .smtable th, .smtable td {
+    border: 1px solid #96d1f3 !important;
+    vertical-align: middle;
+    padding: 5px 3px !important;
+    font-size: 12px;
+}
+
+#thongkeBLV table.smtable tr th {
+    font-weight: normal;
+    text-transform: none;
+}
+
+table.smtable th.text-left, table.smtable td.text-left {
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.smtable {
+    width: 100%;
+}
+
+    .smtable table tr th {
+        vertical-align: central;
+        text-align: center;
+    }
+
+    .smtable .clstong td {
+        text-align: center;
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+    .smtable tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+td.onerow, th.onerow {
+    width: 70px;
+}
+
+td.clstt, th.clstt {
+    width: 50px;
+}
+
+.smfrmbaocao .input-datetime {
+    width: 110px;
+}
+/*End báo cáo*/
+.si-group-cell {
+    width: 10px;
+}
+
+.clsContent .si-group-tr p {
+    margin: 5px !important;
+}
+
+.label-donvi {
+    float: left;
+    margin-left: 20px;
+}
+
+.label-conghoa {
+    text-align: right;
+    margin-right: 20px;
+}
+
+.label-tudo {
+    text-align: right;
+    margin-right: 80px;
+}
+
+.label-ky {
+    text-align: right;
+    margin-right: 50px;
+}
+
+.label-ghicu {
+    text-align: right;
+    font-style: italic;
+    margin-right: 20px;
+}
+
+.smtable thead, .smtable tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;  /*even columns width , fix width of table too*/
+}
+
+    .smtable thead th {
+        font-weight: bold;
+    }
+
+/*.smtable thead {
+        width: calc( 100% - 17px ) 
+    }*/
+.smtable tbody {
+   /* display: block;*/
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.clsContent tr td {
+    text-align: left;
+}
+
+.smtable thead th {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+#denngay, #tungay {
+    font-style: italic
+}

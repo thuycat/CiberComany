@@ -1,0 +1,31 @@
+@import  'scss/scss_lib';
+
+.level_3-wrapper {
+  @extend %transition;
+  position: relative;
+  z-index: 5;
+  height: auto;
+}
+
+.main-content-wrapper {
+  z-index: 7;
+  background-color: #fff;
+  &.down {
+    top: 131px;
+  }  
+  .main-content {
+    border-bottom: none;   
+  }
+}
+
+.main-content-inner {
+  @extend %transition;
+  position: absolute;
+  width: 100%;
+  top: 0;
+}
+
+.level_3 {
+  top: -300px;
+  height: auto; 
+}

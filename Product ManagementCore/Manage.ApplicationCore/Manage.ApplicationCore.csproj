@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DI\Permission\**" />
+    <Compile Remove="DI\TBLoaiMenu\**" />
+    <EmbeddedResource Remove="DI\Permission\**" />
+    <EmbeddedResource Remove="DI\TBLoaiMenu\**" />
+    <None Remove="DI\Permission\**" />
+    <None Remove="DI\TBLoaiMenu\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="baseRepo\BaseReposServices.cs~RFf3e36c.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Dapper" Version="2.0.35" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="Z.Dapper.Plus" Version="4.0.34" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EFDataBase\EFDataBase.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,166 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model EFDataBase.Models.entities.Luser
+@{
+    //string checkeddata = Model.ISSHOW.HasValue && Model.ISSHOW.Value ? "checked" : "";
+    var dataJson = ViewBag.jsondata as string;
+
+}
+<style>
+
+
+    .buttons-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .buttons-wrap button {
+            margin-left: 10px;
+        }
+
+    form#frm-Orders {
+        font-size: 13px;
+    }
+</style>
+<form id="frm-User" class="">
+    <div class="form-horizontal container-fluid form-padding modal-body">
+
+        <div class="form-group">
+            <label for="Title" class="col-sm-2 control-label">Full name </label>
+            <div class="col-sm-10">
+                <input type="text" name="Name" id="Name" class="form-control" value="@Model.Name" />
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="Title" class="col-sm-2 control-label">Login name</label>
+            <div class="col-sm-10">
+                <input type="text" name="LoginName" id="LoginName" class="form-control" value="@Model.LoginName" />
+            </div>
+        </div>
+        <p class="noteRed">
+            Lưu ý: mật khẩu chứa cả số, chữ hoa và chữ thường!
+        </p>
+        <div class="form-group">
+            <label for="Title" class="col-sm-2 control-label">PassWord</label>
+            <div class="col-sm-10">
+                <input type="password" name="PassWord" id="PassWord" class="form-control " value="@Model.PassWord" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Title" class="col-sm-2 control-label">Confirm PassWord</label>
+            <div class="col-sm-10">
+                <input type="password" name="password_confirm" id="password_confirm" class="form-control " value="@Model.PassWord" />
+            </div>
+        </div>
+    </div>
+    <div class="buttons-wrap">
+        <button type="submit" class="k-button k-primary btn-update"><i class="fa fa-check" aria-hidden="true"></i>Cập nhật</button>
+        <button type="button" class="k-button btn-reset"><i class="fa fa-refresh" aria-hidden="true"></i>Nhập lại</button>
+        <button type="button" class="k-button k-danger btn-close"><i class="fa fa-times" aria-hidden="true"></i>Đóng lại</button>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var dataPost =@Html.Raw(dataJson);
+        $("#update-data").click(function () {
+
+            $("#frm-User").submit();
+        })
+        var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+       
+        $("#frm-User").validate({
+            rules: {
+                LoginName: { required: true},
+                Name: { required: true },
+                PassWord: {
+                    required:true,
+                    minlength: 8,
+                    format: passw
+                },
+                password_confirm: {
+                    required: true,
+                    minlength: 8,
+                    equalTo: "#PassWord"
+                }
+            },
+            messages: {
+                LoginName: {
+                    required: "Nhập tên đăng nhập"
+                },
+                Name: {
+                    required: "Nhập họ và tên"
+                },
+                PassWord: {
+                    required: "Điền mật khẩu",
+                    format:"Mật khẩu không hợp lệ "
+
+                },
+                password_confirm: {
+
+                    qualTo: "Mật khẩu không trùng khớp"
+                }
+            },
+            submitHandler: function () {
+                //onSubmit 
+                loading();
+                var dataForm = $("#frm-User").smSerialize();
+
+                $.each(dataForm, function (index, value) {
+                    if (this.name == "OrderDate" && this.value != "") {
+                        var listDate = $("#OrderDate").val().split("/");
+                        dataPost[this.name] = listDate[2] + "-" + listDate[1] + "-" + listDate[0]
+                    }
+                    else {
+                      
+                       
+                        if (isNaN(this.value) ) {
+                            dataPost[this.name] = this.value;
+                        }
+                        else {
+                            dataPost[this.name] = Number(this.value);;
+                        }
+
+
+                    }
+
+
+                });
+
+                $.ajax({
+                    url: "/Admin/User/AddLUser",
+                    type: "POST",
+                    data: JSON.stringify(dataPost),
+                    async: true,
+                    traditional: true,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+                            endLoading();
+                            popupNotification.show(data.message, "success");
+                            refeshGrid("grid_User");
+                        }
+                        else {
+                            endLoading();
+                            createMessage("Đã có lỗi xảy ra", data.message); // Tạo thông báo lỗi
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        endLoading();
+                        createMessage("Đã có lỗi xảy ra", thrownError); // Tạo thông báo lỗi
+
+                    }
+                });
+             return false;
+        }
+        });
+        $("#frm-Orders").smForm();
+    });
+
+</script>

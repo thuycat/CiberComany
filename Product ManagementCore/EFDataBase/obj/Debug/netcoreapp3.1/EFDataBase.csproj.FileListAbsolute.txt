@@ -1,0 +1,12 @@
+D:\ProjectNet\Product ManagementCore\EFDataBase\bin\Debug\netcoreapp3.1\EFDataBase.deps.json
+D:\ProjectNet\Product ManagementCore\EFDataBase\bin\Debug\netcoreapp3.1\EFDataBase.runtimeconfig.json
+D:\ProjectNet\Product ManagementCore\EFDataBase\bin\Debug\netcoreapp3.1\EFDataBase.runtimeconfig.dev.json
+D:\ProjectNet\Product ManagementCore\EFDataBase\bin\Debug\netcoreapp3.1\EFDataBase.dll
+D:\ProjectNet\Product ManagementCore\EFDataBase\bin\Debug\netcoreapp3.1\EFDataBase.pdb
+D:\ProjectNet\Product ManagementCore\EFDataBase\obj\Debug\netcoreapp3.1\EFDataBase.csprojAssemblyReference.cache
+D:\ProjectNet\Product ManagementCore\EFDataBase\obj\Debug\netcoreapp3.1\EFDataBase.AssemblyInfoInputs.cache
+D:\ProjectNet\Product ManagementCore\EFDataBase\obj\Debug\netcoreapp3.1\EFDataBase.AssemblyInfo.cs
+D:\ProjectNet\Product ManagementCore\EFDataBase\obj\Debug\netcoreapp3.1\EFDataBase.csproj.CoreCompileInputs.cache
+D:\ProjectNet\Product ManagementCore\EFDataBase\obj\Debug\netcoreapp3.1\EFDataBase.dll
+D:\ProjectNet\Product ManagementCore\EFDataBase\obj\Debug\netcoreapp3.1\EFDataBase.pdb
+D:\ProjectNet\Product ManagementCore\EFDataBase\obj\Debug\netcoreapp3.1\EFDataBase.genruntimeconfig.cache

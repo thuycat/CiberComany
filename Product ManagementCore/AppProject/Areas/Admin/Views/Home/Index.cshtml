@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/ShareAdmin/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .title_icon {
+        font-size: 19px;
+        color: red;
+        font-weight: bold;
+        text-decoration: underline;
+        margin: 5px 10px 20px;
+    }
+    .statistic {
+        padding-top: 5px;
+    }
+    .select-search{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .select-flex1{
+        flex:1;
+        margin-right:10px;
+    }
+    .content-flex.col-sm-3 {
+        text-align: right;
+    }
+    .zone_search{
+        margin-bottom: 20px
+    }
+  
+</style>
+<div class="smgrid" data-title="Order" data-grid="grid_Orders"
+     data-form="/Admin/Home/FormAdd" data-formwidth="1024" data-view="/Admin/Home/FormView" data-controller="/Admin/Home/">
+    <div class="zone_search">
+       
+        <div class="title_icon">
+            Order list
+        </div>
+            <div class="row">
+                <label for="Title" class="col-sm-3 control-label">Enter category to search</label>
+                <div class="col-sm-6 row select-search ">
+                    <div class="select-flex1">
+                        <select id="DataSelect-CateId" data-place="Category" name="CateId">
+                            <option value="0" disabled selected>
+                                select
+                            </option>
+                            @foreach (var item in Model as List<EFDataBase.Models.entities.Category>)
+                            {
+                                <option value="@item.Id">
+                                    @item.Name
+                                </option>
+
+
+                            }
+                        </select>
+                    </div>
+                    
+                    <button type="button" class="k-primary k-button Search" id="Search">Search</button>
+
+                </div>
+
+
+                <div class="content-flex col-sm-3">
+                    <button type="button" class="k-primary k-button btnadd">Thêm mới</button>
+                </div>
+            </div>
+       
+    </div>
+    <div id="grid_Orders">
+    </div>
+</div>
+@section javascript{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$("#DataSelect-CateId").smSelect2018V3({
+            //    FieldValue: "Id",
+            //    FieldText: "Name",
+
+            //}).change(function () {
+
+            //});
+            $("#Search").click(function () {
+                refeshGrid("grid_Orders");
+            })
+            $("#DataSelect-CateId").smSelect2018V2({
+                FieldValue: "Id",
+                dropdownParent: $(".select-flex1")
+            });
+            $("#grid_Orders").siKendoGrid({
+                UrlPost: "/Admin/Home/GetList",
+                //UrlPost: "/api/APILoaiMenu/GetListLoaiMenu",
+                pageSize: 20,
+                page: 1,
+                //Sort: [{ dir: "asc", field: "userSTT" }],
+                isColumSTT: true,
+                columns: [
+                    {
+                        field: "product Name",
+                        title: "Tên sản phẩm",
+                        template: function (o) {
+                            return '<span class="view" data-id="' + o.idOr + '">' + DisableXssInJs(o.productName) + '</span>';
+                        }
+                    },
+                    {
+                        field: "cateGoryName",
+                        title: "cateGory Name",
+                        template: function (o) {
+                            return '<span class="view" data-id="' + o.idOr + '">' + DisableXssInJs(o.cateGoryName) + '</span>';
+                        }
+                    }, {
+                        field: "customerName",
+                        title: "Customer Name",
+                        template: function (o) {
+                            return '<span class="view" data-id="' + o.idOr + '">' + DisableXssInJs(o.customerName) + '</span>';
+                        }
+                    },
+
+                    {
+                        //NGAYCONGBO
+                        field: "orderDate",
+                        title: "Order Date",
+                        template: function (o) {
+                            return '<span class="" >' + formatDateTime(o.orderDate) + '</span>';
+                        }
+                    },
+                    {
+
+                        field: "amount",
+                        title: "Amount",
+                        template: function (o) {
+                            return '<span class="" >' + o.amount + '</span>';
+                        }
+                    },
+
+                    {
+                        title: "Sửa",
+                        width: "55px",
+                        template: function (o) {
+                            return '<span  data-edit="' + o.idOr + '" class="btn btn-sm btn-edit" title="Sửa"><i class="fa-solid fa-pen-to-square"></i></span>'
+                        }
+                    }, {
+                        title: "Xóa",
+                        width: "55px",
+                        template: function (o) {
+                           
+                            return '<span  data-delete="' + o.idOr + '" data-action="Delete" class="btn btn-sm btn-delete" title="Xóa"><i class="fas fa-trash-alt"></i></span>'
+                        }
+                    }],
+                parameterPlus: function (option) {
+                    option["isSortAsc"] = false;
+                    option["FieldSort"] = "Id";
+                    option["IDCate"] = $("#DataSelect-CateId").val() != null ? Number( $("#DataSelect-CateId").val()): 0;
+                },
+                dataBound: function () {
+                    $("#grid_Orders .k-grid-content").css(
+                        { "max-height": $("#panel-center").height() - $(".k-grid-pager.k-floatwrap").outerHeight() - $(".k-grid-header-wrap").outerHeight() - $(".zone_search").outerHeight() - $(".title_icon").outerHeight() - 3 + 'px' });
+                },
+                //group: "menuLoai"
+            });
+        });
+    </script>
+}
+
+

@@ -1,0 +1,240 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+
+*@
+@model EFDataBase.Models.entities.Orders
+
+@{
+    //string checkeddata = Model.ISSHOW.HasValue && Model.ISSHOW.Value ? "checked" : "";
+    var dataJson = ViewBag.jsondata as string;
+
+}
+<style>
+
+
+    .buttons-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .buttons-wrap button {
+            margin-left: 10px;
+        }
+    form#frm-Orders {
+        font-size: 13px;
+    }
+</style>
+<form id="frm-Orders" class="">
+    <div class="form-horizontal container-fluid form-padding modal-body">
+
+        <div class="form-group">
+            <label for="Title" class="col-sm-2 control-label">Order name </label>
+            <div class="col-sm-10">
+                <input type="text" name="Name" id="Name" class="form-control" value="@Model.Name" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="Title" class="col-sm-2 control-label">Product</label>
+            <div class="col-sm-10">
+                <select id="DataSelect-SanPham" name="ProductId">
+
+                    @foreach (var item in ViewBag.Product as List<EFDataBase.Models.entities.Product>)
+                    {
+                        if (Model.ProductId == item.Id)
+                        {
+                            <option value="@item.Id" selected="selected">
+                                @item.Name
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id">
+                                @item.Name
+                            </option>
+                        }
+                    }
+
+
+
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Title" class="col-sm-2 control-label">Amount</label>
+            <div class="col-sm-10">
+                <input type="text" name="Amount" id="Amount" class="form-control" value="@Model.Amount" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Title" class="col-sm-2 control-label">Customer</label>
+            <div class="col-sm-10">
+                <select id="DataSelect-CusTom" name="CustomerId">
+                    @foreach (var item in ViewBag.Custom as List<EFDataBase.Models.entities.Customer>)
+                    {
+                        if (Model.CustomerId == item.Id)
+                        {
+                            <option value="@item.Id" selected="selected">
+                                @item.Name
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id">
+                                @item.Name
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Title" class="col-sm-2 control-label">Order Date</label>
+            <div class="col-sm-10">
+                <input type="text" name="OrderDate" id="OrderDate" class="form-control input-datetime" value="@Model.OrderDate" />
+            </div>
+        </div>
+    </div>
+    <div class="buttons-wrap">
+        <button type="submit" class="k-button k-primary btn-update"><i class="fa fa-check" aria-hidden="true"></i>Cập nhật</button>
+        <button type="button" class="k-button btn-reset"><i class="fa fa-refresh" aria-hidden="true"></i>Nhập lại</button>
+        <button type="button" class="k-button k-danger btn-close"><i class="fa fa-times" aria-hidden="true"></i>Đóng lại</button>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var dataPost =@Html.Raw(dataJson);
+        $("#update-data").click(function () {
+
+            $("#frm-Orders").submit();
+        })
+        $(".input-datetime").daterangepicker({
+            timePicker: true,
+            singleDatePicker: true,
+            timePicker24Hour: true,
+            locale: { format: 'DD/MM/YYYY HH:mm' }
+        });
+        $("#DataSelect-SanPham").select2({
+            dropdownParent: $(".modal-body"),
+            placeholder: "Chọn"
+        });
+        $("#DataSelect-CusTom").select2({
+            dropdownParent: $(".modal-body"),
+            placeholder: "Chọn"
+        });
+        var checkQuantity = function () {
+
+            return new Promise((resolve, reject) => {
+                var request = new XMLHttpRequest();
+                request.open('POST', "/Admin/Home/CheckQuantityData?Amount=" + $("#Amount").val() + "&IdPr=" + $("#DataSelect-SanPham").val());
+                request.onload = function () {
+                    if (request.status == 200) {
+                        resolve(request.response);
+                    } else {
+                        reject(Error(request.statusText));
+                    }
+                };
+                request.onerror = function () {
+                    reject(Error('Lỗi!'));
+                };
+                request.send(); //send the request
+            })
+        }
+        $("#frm-Orders").validate({
+            rules: {
+                Amount: { required: true,number:true },
+                Name: { required: true },
+                OrderDate: { required: true }
+            },
+            messages: {
+                Amount: {
+                    required: "Điền số lượng"
+                },
+                Name: {
+                    required: "Điền mô tả đơn hàng"
+                },
+                OrderDate: {
+                    required: "Chọn ngày"
+                }
+            },
+            submitHandler: function () {
+                //onSubmit
+                loading();
+                var dataForm = $("#frm-Orders").smSerialize();
+
+                $.each(dataForm, function (index, value) {
+                    if (this.name == "OrderDate" && this.value != "") {
+                        var listDate = $("#OrderDate").val().split("/");
+                        dataPost[this.name] = listDate[2] + "-" + listDate[1] + "-" + listDate[0]
+                    }
+                    else {
+                        debugger;
+                        
+                        if (isNaN(this.value)) {
+                            dataPost[this.name] = this.value;
+                        }
+                        else {
+                            dataPost[this.name] = Number(this.value);
+                        }
+
+
+                    }
+
+
+                });
+
+
+                checkQuantity().then(function (dataResponse) {
+                    console.log(dataPost)
+                 //var   dataPostjson=  JSON.stringify(dataPost)
+                   var data1= JSON.parse(dataResponse)
+                    if (data1.success && data1.data) {
+
+                        $.ajax({
+
+                            url: "/Admin/Home/AddOrders",
+                            type: "POST",
+                            data: JSON.stringify(dataPost),
+                            async: true,
+                            traditional: true,
+                            contentType: 'application/json; charset=utf-8',
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.success) {
+                                    endLoading();
+                                    popupNotification.show(data.message, "success");
+                                    $(".btn-close").click();
+                                    refeshGrid("grid_Orders");
+                                }
+                                else {
+                                    endLoading();
+                                    createMessage("Đã có lỗi xảy ra", data.message); // Tạo thông báo lỗi
+                                }
+
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                endLoading();
+                                createMessage("Đã có lỗi xảy ra", thrownError); // Tạo thông báo lỗi
+
+                            }
+                        });
+                    }
+                    else {
+                        endLoading();
+                        createMessage("Thông báo", data1.message);
+                    }
+                }, function (error) {
+                    createMessage("Thông báo", error);
+                });
+
+
+             return false;
+        }
+        });
+        $("#frm-Orders").smForm();
+    });
+
+</script>
