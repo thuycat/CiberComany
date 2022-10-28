@@ -16,6 +16,7 @@
   <ItemGroup>
     <Folder Include="DBContext\" />
     <Folder Include="Models\Entities\" />
+    <Folder Include="DB_BackUp\" />
   </ItemGroup>
 
 </Project>
