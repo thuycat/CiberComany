@@ -17,6 +17,8 @@
     <Folder Include="DBContext\" />
     <Folder Include="Models\Entities\" />
     <Folder Include="DB_BackUp\" />
+    <Folder Include="EF\" />
+    <Folder Include="Magrations\" />
   </ItemGroup>
 
 </Project>
