@@ -8,7 +8,7 @@ namespace EProductMain.Data.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Category { get; set; }
+        public int ProductInCategoryId { get; set; }
         public string Description { get; set; }
         public string SeoDescription { get; set; }
         public string SeoTitle { get; set; }
