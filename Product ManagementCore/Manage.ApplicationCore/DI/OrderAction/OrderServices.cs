@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using EFDataBase.Models.entities;
+using EProductMain.Data.Entities;
 using Manage.ApplicationCore.baseRepo;
 using Manage.ApplicationCore.ItemShare;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Manage.ApplicationCore.DI.OrderAction
 {
-    public class OrdersServices : BaseReposServices<Orders>, IOrder
+    public class OrdersServices : BaseReposServices<Order>, IOrder
     {
         public OrdersServices(Microsoft.Extensions.Configuration.IConfiguration configuration, IActionGeneral IActionGeneral) : base(configuration, IActionGeneral)
         {
@@ -50,7 +51,7 @@ namespace Manage.ApplicationCore.DI.OrderAction
 
             return string.Join(" AND ", cauDieuKienAND);
         }
-        public async Task<MethodResult<List<Orders>>> GetListEntity(OrdersQuery queryData)
+        public async Task<MethodResult<List<Order>>> GetListEntity(OrdersQuery queryData)
         {
             using (var conn = GetOpenConnection())
             {
@@ -69,13 +70,13 @@ namespace Manage.ApplicationCore.DI.OrderAction
                         queryCount = $" WHERE {queryData.buildQuery}";
 
                     var count = await conn.QueryAsync<int>($"SELECT COUNT(*) FROM {_tableName}{queryCount}");
-                    List<Orders> listItem = (await conn.QueryAsync<Orders>(getList)).ToList();
+                    List<Order> listItem = (await conn.QueryAsync<Order>(getList)).ToList();
 
-                    return MethodResult<List<Orders>>.ResultWithData(listItem, "Thành công!", count.FirstOrDefault());
+                    return MethodResult<List<Order>>.ResultWithData(listItem, "Thành công!", count.FirstOrDefault());
                 }
                 catch (Exception e)
                 {
-                    return MethodResult<List<Orders>>.ResultWithError(e.ToString());
+                    return MethodResult<List<Order>>.ResultWithError(e.ToString());
                 }
 
             }
@@ -83,7 +84,7 @@ namespace Manage.ApplicationCore.DI.OrderAction
         }
         public async Task<MethodResult<List<OrderJson>>> GetListJson(OrdersQuery queryData)
         {
-            Orders Order = new Orders();
+            Order Order = new Order();
             using (var conn = GetOpenConnection())
             {
 
@@ -145,7 +146,7 @@ namespace Manage.ApplicationCore.DI.OrderAction
         }
         public async Task<MethodResult<List<OrderJson>>> GetListJson2(OrdersQuery queryData)
         {
-            Orders Order = new Orders();
+            Order Order = new Order();
             using (var conn = GetOpenConnection())
             {
 
@@ -160,8 +161,8 @@ namespace Manage.ApplicationCore.DI.OrderAction
                     var Orders = await conn.QueryAsync<OrderJson, Product, Customer, OrderJson>
                         (sql, (Orders, product, Customer) =>
                         {
-                            Orders.Product = product;
-                            Orders.Customer = Customer;
+                           // Orders.Product = product;
+                           // Orders.Customer = Customer;
                             return Orders;
                         },
                     //CateGoryName

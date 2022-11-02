@@ -9,11 +9,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace EFDataBase.Models.entities
 {
     //[Table("Products")]
-    public partial class Product
+    public partial class ProductCy
     {
-        public Product()
+        public ProductCy()
         {
-            Orders = new HashSet<Orders>();
+            Orders = new HashSet<OrderCys>();
         }
 
         public int Id { get; set; }
@@ -24,7 +24,7 @@ namespace EFDataBase.Models.entities
         public double? Price { get; set; }
         public int? Quantity { get; set; }
 
-        public virtual Category Category { get; set; }
-        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual CategoryCy Category { get; set; }
+        public virtual ICollection<OrderCys> Orders { get; set; }
     }
 }

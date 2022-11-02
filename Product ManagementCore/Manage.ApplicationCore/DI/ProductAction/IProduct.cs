@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EFDataBase.Models.entities;
 using Manage.ApplicationCore.baseRepo;
+using EProductMain.Data.Entities;
 
 namespace Manage.ApplicationCore.DI.ProductAction
 {

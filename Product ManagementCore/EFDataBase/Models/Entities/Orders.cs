@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace EFDataBase.Models.entities
 {
-    public partial class Orders
+    public partial class OrderCys
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -17,7 +17,7 @@ namespace EFDataBase.Models.entities
         public int? Amount { get; set; }
 
         public virtual Customer Customer { get; set; }
-        public virtual Product Product { get; set; }
+        public virtual ProductCy Product { get; set; }
     }
    
 }

@@ -22,7 +22,7 @@ namespace EFDataBase.Configurations
             builder.Property(x => x.Details).HasMaxLength(500);
 
 
-            builder.Property(x => x.LanguageId).IsUnicode(false).IsRequired().HasMaxLength(5);
+            builder.Property(x => x.LanguageId).IsUnicode(false).HasMaxLength(5);
 
             builder.HasOne(x => x.Language).WithMany(x => x.ProductTranslations).HasForeignKey(x => x.LanguageId)
                 .OnDelete(DeleteBehavior.SetNull)

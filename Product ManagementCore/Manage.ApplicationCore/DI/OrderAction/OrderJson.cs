@@ -1,11 +1,12 @@
 ﻿using EFDataBase.Models.entities;
+using EProductMain.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Manage.ApplicationCore.DI.OrderAction
 {
-    public class OrderJson : Orders
+    public class OrderJson : Order
     {
         public int idOr
         {

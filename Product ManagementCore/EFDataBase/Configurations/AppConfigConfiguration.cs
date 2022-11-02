@@ -13,7 +13,8 @@ namespace EFDataBase.Configurations
         {
             builder.ToTable("AppConfigs");
             builder.HasKey(x => x.Key);
-            builder.Property(x => x.Key).HasColumnType("UNIQUEIDENTIFIER").HasDefaultValueSql("NEWID()");
+           // builder.Property(x => x.Key).HasColumnType("UNIQUEIDENTIFIER").HasDefaultValueSql("NEWID()");
+            builder.Property(x => x.Key).HasDefaultValueSql("NEWID()");
             builder.Property(x => x.Value).IsRequired(true);
         }
     }

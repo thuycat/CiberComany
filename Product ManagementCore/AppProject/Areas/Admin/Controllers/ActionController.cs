@@ -1,4 +1,5 @@
 ﻿using EFDataBase.Models.entities;
+using EProductMain.Data.Entities;
 using Manage.ApplicationCore.ItemShare;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ namespace AppProject.Areas.Admin.Controllers
     {
         [HttpPost]
         [Route("AddOrders")]
-        public MethodResult AddOrders([FromBody] Orders dataInPut)
+        public MethodResult AddOrders([FromBody] Order dataInPut)
         {
             MethodResult result = new MethodResult();
             if (dataInPut != null)

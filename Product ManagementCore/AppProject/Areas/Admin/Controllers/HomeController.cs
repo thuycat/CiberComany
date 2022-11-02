@@ -1,5 +1,6 @@
 ﻿using AppProject.Areas.Admin.Models;
 using EFDataBase.Models.entities;
+using EProductMain.Data.Entities;
 using Manage.ApplicationCore.DI.CategoryAction;
 using Manage.ApplicationCore.DI.CustomerAction;
 using Manage.ApplicationCore.DI.OrderAction;
@@ -48,7 +49,7 @@ namespace AppProject.Areas.Admin.Controllers
 
             ViewBag.Custom = (await _ICustomer.GetListEntity(new CustomerQuery() { listField = new List<string>() { "Id", "Name" } })).data;
             ViewBag.Product = (await _IProduct.GetListEntity(new ProductQuery() { listField = new List<string>() { "Id", "Name" } })).data;
-            Orders data = new Orders();
+            Order data = new Order();
             if (!string.IsNullOrEmpty(ID))
             {
                 var dataresult = await _IOrder.getDataIDAsync(ID);
@@ -74,7 +75,7 @@ namespace AppProject.Areas.Admin.Controllers
             }
             catch { }
 
-            Orders data = new Orders();
+            Order data = new Order();
             if (!string.IsNullOrEmpty(ID))
             {
                 var dataresult = await _IOrder.getDataIDAsync(ID);
@@ -99,35 +100,35 @@ namespace AppProject.Areas.Admin.Controllers
           
             return result;
         }
-        [HttpPost]
-        public async Task<MethodResult> AddOrders( [FromBody] Orders dataInPut)
-        {
-            MethodResult result = new MethodResult();
+        //[HttpPost]
+        //public async Task<MethodResult> AddOrders( [FromBody] Order dataInPut)
+        //{
+        //    MethodResult result = new MethodResult();
             
-           if(dataInPut != null)
-            {
-                if (dataInPut.Id <= 0)
-                {// caajp nhat lai so luong cuaproduct
-                    var datap = (await _IProduct.getDataID(dataInPut.ProductId.Value)).data;
-                    await _IProduct.UpdateOneFieldAsync("Quantity", datap.Quantity - dataInPut.Amount, dataInPut.ProductId.Value);
-                    result = await _IOrder.AddAsync(dataInPut);
+        //   if(dataInPut != null)
+        //    {
+        //        if (dataInPut.Id <= 0)
+        //        {// caajp nhat lai so luong cuaproduct
+        //            var datap = (await _IProduct.getDataID(dataInPut.ProductId.Value)).data;
+        //            await _IProduct.UpdateOneFieldAsync("Quantity", datap.Quantity - dataInPut.Amount, dataInPut.ProductId.Value);
+        //            result = await _IOrder.AddAsync(dataInPut);
                     
-                }
-                else
-                {// caajp nhat lai so luong cuaproduct
-                    var datap = (await _IProduct.getDataID(dataInPut.ProductId.Value)).data;
-                    var dataOr= (await _IOrder.getDataID(dataInPut.Id)).data;
-                    await _IProduct.UpdateOneFieldAsync("Quantity", datap.Quantity + dataOr.Amount- dataInPut.Amount, dataInPut.ProductId.Value);
-                    result = await _IOrder.EditAsync(dataInPut);
-                }
-            }
-            else
-            {
+        //        }
+        //        else
+        //        {// caajp nhat lai so luong cuaproduct
+        //            var datap = (await _IProduct.getDataID(dataInPut.ProductId.Value)).data;
+        //            var dataOr= (await _IOrder.getDataID(dataInPut.Id)).data;
+        //            await _IProduct.UpdateOneFieldAsync("Quantity", datap.Quantity + dataOr.Amount- dataInPut.Amount, dataInPut.ProductId.Value);
+        //            result = await _IOrder.EditAsync(dataInPut);
+        //        }
+        //    }
+        //    else
+        //    {
 
-            }
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
         [HttpGet]
         public async Task<MethodResult> UpdateOneOrField(int ID)
         {

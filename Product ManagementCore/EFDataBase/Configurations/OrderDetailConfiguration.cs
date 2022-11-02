@@ -24,7 +24,7 @@ namespace EFDataBase.Configurations
                 .HasConstraintName("FK_OrderId_OrderDetail");
             builder.HasOne(x => x.Product).WithMany(x => x.OrderDetails).HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_OrderId_OrderDetail"); ;
+                .HasConstraintName("FK_ProductId_OrderDetail"); ;
         }
     }
 }

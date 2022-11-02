@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using EFDataBase.Models.entities;
+using EProductMain.Data.Entities;
 using Manage.ApplicationCore.baseRepo;
 using Manage.ApplicationCore.ItemShare;
 using System;

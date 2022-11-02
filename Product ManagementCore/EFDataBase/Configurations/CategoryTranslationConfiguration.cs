@@ -22,7 +22,7 @@ namespace EFDataBase.Configurations
 
             builder.Property(x => x.SeoTitle).HasMaxLength(200);
 
-            builder.Property(x => x.LanguageId).IsUnicode(false).IsRequired().HasMaxLength(5);
+            builder.Property(x => x.LanguageId).IsUnicode(false).HasMaxLength(5);
 
             builder.HasOne(x => x.Language)
                 .WithMany(x => x.CategoryTranslations)

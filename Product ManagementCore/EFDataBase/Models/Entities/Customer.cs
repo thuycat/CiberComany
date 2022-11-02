@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EProductMain.Data.Entities;
+using System;
 using System.Collections.Generic;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
@@ -11,7 +12,7 @@ namespace EFDataBase.Models.entities
     {
         public Customer()
         {
-            Orders = new HashSet<Orders>();
+            Orders = new HashSet<Order>();
         }
 
         public int Id { get; set; }
@@ -19,6 +20,6 @@ namespace EFDataBase.Models.entities
         public DateTime? Created { get; set; }
         public string Address { get; set; }
 
-        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

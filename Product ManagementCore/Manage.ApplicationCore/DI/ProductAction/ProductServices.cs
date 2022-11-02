@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Linq;
 using Dapper;
+using EProductMain.Data.Entities;
 
 namespace Manage.ApplicationCore.DI.ProductAction
 {

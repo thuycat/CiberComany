@@ -7,11 +7,11 @@ using System.Collections.Generic;
 
 namespace EFDataBase.Models.entities
 {
-    public partial class Category
+    public partial class CategoryCy
     {
-        public Category()
+        public CategoryCy()
         {
-            Product = new HashSet<Product>();
+            Product = new HashSet<ProductCy>();
         }
 
         public int Id { get; set; }
@@ -19,6 +19,6 @@ namespace EFDataBase.Models.entities
         public DateTime? Created { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<Product> Product { get; set; }
+        public virtual ICollection<ProductCy> Product { get; set; }
     }
 }

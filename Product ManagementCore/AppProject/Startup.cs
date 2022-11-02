@@ -1,9 +1,13 @@
-using AppProject.Configurations;
+﻿using AppProject.Configurations;
 using AppProject.Middlewares;
+using EFDataBase.EF;
 using EFDataBase.Models.entities;
+using EProductMain.Data.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,9 +39,26 @@ namespace AppProject
             services.AddRazorPages();
             services.AddMyServices();
             services.AddCustomService(Configuration);
+            //đăng ýk Identity
+            services.AddIdentity<AppUser, AppRole>()
+                .AddEntityFrameworkStores<CyBerDBContext>()
+                .AddDefaultTokenProviders();
+          //var  _connectionString = Configuration.GetConnectionString("SqlConnectionString");
+          // services.AddDbContext<CIBERCOMANYContext>(option => option.UseSqlServer(_connectionString));
+          //git branch=> kiểm tra xem đang ở bran nào
+          //git branch -r => kiểm tra các bran kể cả bran trên  remote
+          //git clone=> lấy source code về
+          //git status: ccheck file nào còn check out
+          //chuyển nhánh: git checkout BranName
+          // tạo bran: git bran newbranName
+          // Identity:
+          // Authentication: xác định danh tính,login logout..
+          //Authorization: xac định quyền truy cập
+          //-cung cấp quarn lý use: sign up, user, role....
 
-          var  _connectionString = Configuration.GetConnectionString("SqlConnectionString");
-            services.AddDbContext<CIBERCOMANYContext>(option => option.UseSqlServer(_connectionString));
+
+
+
 
 
         }
@@ -63,7 +84,8 @@ namespace AppProject
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            // authen
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -77,6 +99,14 @@ namespace AppProject
                     pattern: "{controller=Login}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+            //IdentityUser user;
+            //IdentityDbContext context; 
         }
     }
 }
+//magration
+// dotnet ef magrations list=> em danh sách magration
+//dotnet ef magrations add Migrationname=> them moi migrations => Add-Migration NameMi
+//Remove-Migration=> xóa migration mới nhất
+//Rollback Migration:update-database –TargetMigration
+//PM> update-database -TargetMigration:SchoolDB-v1
