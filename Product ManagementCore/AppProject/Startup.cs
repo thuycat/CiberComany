@@ -3,6 +3,7 @@ using AppProject.Middlewares;
 using EFDataBase.EF;
 using EFDataBase.Models.entities;
 using EProductMain.Data.Entities;
+using Manage.ApplicationCore.ItemShare;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +34,11 @@ namespace AppProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //mail
+            services.AddOptions();
+            var mailSettings = Configuration.GetSection("MailSettings");
+            services.Configure<MailConfig>(mailSettings);
+            //end mail
             services.AddDistributedMemoryCache();
             services.AddSession();
             services.AddMvc();
@@ -50,7 +56,7 @@ namespace AppProject
             services.AddDefaultIdentity<AppUser>()
                .AddEntityFrameworkStores<CyBerDBContext>()
                .AddDefaultTokenProviders();
-           
+
             //services.AddIdentity<IdentityUser, IdentityRole>()
             //                .AddEntityFrameworkStores<AuthDBContext>()
             //                .AddDefaultTokenProviders();
@@ -82,7 +88,7 @@ namespace AppProject
                 //Identity/Account/Manage
 
             });
-           
+
             //git branch=> kiểm tra xem đang ở bran nào
             //git branch -r => kiểm tra các bran kể cả bran trên  remote
             //git clone=> lấy source code về
@@ -93,12 +99,6 @@ namespace AppProject
             // Authentication: xác định danh tính,login logout..
             //Authorization: xac định quyền truy cập
             //-cung cấp quarn lý use: sign up, user, role....
-
-
-
-
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -132,10 +132,21 @@ namespace AppProject
                 endpoints.MapControllerRoute(
                     name: "areas",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
+                endpoints.MapGet("/TestEmail", async (context) =>
+                {
+                    var message = await MailUtil.SendGMail("khanghoa12388@gmail.com", "dauthithuycat@gmail.com", "", "", "khanghoa12388@gmail.com", "");
+                    // await context.Response.w
+                });
+                endpoints.MapGet("/TestEmailService", async (context) =>
+                {
+                    var SendMailService = context.RequestServices.GetServices<MailServices>();
+                    var mailcontent = new mailContent();
+                   //var kq= await SendMailService.SendMail(mailcontent);
+                    // await context.Response.w
+                });
                 endpoints.MapControllerRoute(
                     name: "default",
-                   // pattern: "{controller=Login}/{action=Index}/{id?}");
+                    // pattern: "{controller=Login}/{action=Index}/{id?}");
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });

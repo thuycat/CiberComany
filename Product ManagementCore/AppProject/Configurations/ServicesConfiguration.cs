@@ -5,6 +5,7 @@ using Manage.ApplicationCore.DI.CustomerAction;
 using Manage.ApplicationCore.DI.OrderAction;
 using Manage.ApplicationCore.DI.ProductAction;
 using Manage.ApplicationCore.DI.UserAction;
+using Manage.ApplicationCore.ItemShare;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,13 @@ namespace AppProject.Configurations
         public static void AddMyServices(this IServiceCollection services)
         {
 
-            services.AddSingleton<IOrder, OrdersServices>();
-            services.AddSingleton<IProduct, ProductServices>();
-            services.AddSingleton<IActionGeneral, ActionGenneralServices>();
-            services.AddSingleton<ICustomer, CustomerServices>();
-            services.AddSingleton<ICategory, CategoryServices>();
-            services.AddSingleton<IUser, UserServices>();
+            services.AddScoped<IOrder, OrdersServices>();
+            services.AddScoped<IProduct, ProductServices>();
+            services.AddScoped<IActionGeneral, ActionGenneralServices>();
+            services.AddScoped<ICustomer, CustomerServices>();
+            services.AddScoped<ICategory, CategoryServices>();
+            services.AddScoped<IUser, UserServices>();
+            services.AddTransient<MailServices>();
             ////services.AddScoped<IViewRenderService, ViewRenderService>();
             //services.AddSingleton<IPermission, PermissionService>();
             //services.AddSingleton<ILoaiMenu, LoaiMenuService>();
