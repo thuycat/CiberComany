@@ -189,3 +189,7 @@ D:\ProjectNet\Product ManagementCore\AppProject\bin\Debug\netcoreapp3.1\Microsof
 D:\ProjectNet\Product ManagementCore\AppProject\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
 D:\ProjectNet\Product ManagementCore\AppProject\obj\Debug\netcoreapp3.1\AppProject.MvcApplicationPartsAssemblyInfo.cs
 D:\ProjectNet\Product ManagementCore\AppProject\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
+D:\ProjectNet\Product ManagementCore\AppProject\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+D:\ProjectNet\Product ManagementCore\AppProject\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
+D:\ProjectNet\Product ManagementCore\AppProject\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+D:\ProjectNet\Product ManagementCore\AppProject\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs

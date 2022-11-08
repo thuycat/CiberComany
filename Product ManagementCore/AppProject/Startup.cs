@@ -41,7 +41,9 @@ namespace AppProject
             services.AddMyServices();
             services.AddCustomService(Configuration);
             //đăng ýk Identity
-            services.AddDbContext<CyBerDBContext>();
+            // services.AddDbContext<CyBerDBContext>();
+            var _connectionString = Configuration.GetConnectionString("SqlConnectionString");
+            services.AddDbContext<CyBerDBContext>(option => option.UseSqlServer(_connectionString));
             //services.AddIdentity<AppUser, AppRole>()
             //    .AddEntityFrameworkStores<CyBerDBContext>()
             //    .AddDefaultTokenProviders();
@@ -58,7 +60,7 @@ namespace AppProject
                 // Thiết lập về Password
                 options.Password.RequireDigit = true; // Không bắt phải có số
                 options.Password.RequireLowercase = true; // Không bắt phải có chữ thường
-                options.Password.RequireNonAlphanumeric = true; // Không bắt ký tự đặc biệt
+                options.Password.RequireNonAlphanumeric = false; // Không bắt ký tự đặc biệt
                 options.Password.RequireUppercase = true; // Không bắt buộc chữ in
                 options.Password.RequiredLength = 3; // Số ký tự tối thiểu của password
                 options.Password.RequiredUniqueChars = 1; // Số ký tự riêng biệt
@@ -80,8 +82,7 @@ namespace AppProject
                 //Identity/Account/Manage
 
             });
-            //var  _connectionString = Configuration.GetConnectionString("SqlConnectionString");
-            // services.AddDbContext<CIBERCOMANYContext>(option => option.UseSqlServer(_connectionString));
+           
             //git branch=> kiểm tra xem đang ở bran nào
             //git branch -r => kiểm tra các bran kể cả bran trên  remote
             //git clone=> lấy source code về
@@ -124,7 +125,8 @@ namespace AppProject
             // authen
             app.UseAuthentication();
             app.UseAuthorization();
-
+            SignInManager<AppUser> s;
+            UserManager<AppUser> u;
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -133,7 +135,8 @@ namespace AppProject
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Login}/{action=Index}/{id?}");
+                   // pattern: "{controller=Login}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
             //IdentityUser user;

@@ -4,14 +4,16 @@ using EFDataBase.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFDataBase.Migrations
 {
     [DbContext(typeof(CyBerDBContext))]
-    partial class CyBerDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221108141910_DataV0")]
+    partial class DataV0
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,10 +94,14 @@ namespace EFDataBase.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -332,7 +338,7 @@ namespace EFDataBase.Migrations
                     b.Property<DateTime>("OrderDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 11, 8, 21, 29, 39, 940, DateTimeKind.Local).AddTicks(3259));
+                        .HasDefaultValue(new DateTime(2022, 11, 8, 21, 19, 9, 822, DateTimeKind.Local).AddTicks(1600));
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");

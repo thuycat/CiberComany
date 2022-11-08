@@ -119,7 +119,7 @@ namespace EFDataBase.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(nullable: true),
                     Quantity = table.Column<int>(nullable: false),
-                    OrderDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2022, 11, 2, 22, 55, 15, 544, DateTimeKind.Local).AddTicks(3872)),
+                    OrderDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2022, 11, 8, 21, 19, 9, 822, DateTimeKind.Local).AddTicks(1600)),
                     UserId = table.Column<Guid>(nullable: false),
                     ShipName = table.Column<string>(maxLength: 200, nullable: false),
                     ShipAddress = table.Column<string>(maxLength: 200, nullable: false),
@@ -199,7 +199,7 @@ namespace EFDataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
+                name: "AppRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -210,9 +210,9 @@ namespace EFDataBase.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.PrimaryKey("PK_AppRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AppRoles_RoleId",
+                        name: "FK_AppRoleClaims_AppRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AppRoles",
                         principalColumn: "Id",
@@ -220,7 +220,7 @@ namespace EFDataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
+                name: "AppUserClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -231,9 +231,9 @@ namespace EFDataBase.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.PrimaryKey("PK_AppUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AppUsers_UserId",
+                        name: "FK_AppUserClaims_AppUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AppUsers",
                         principalColumn: "Id",
@@ -241,19 +241,19 @@ namespace EFDataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
+                name: "AppUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    ProviderKey = table.Column<string>(nullable: false),
-                    ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<Guid>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false),
+                    LoginProvider = table.Column<string>(nullable: true),
+                    ProviderKey = table.Column<string>(nullable: true),
+                    ProviderDisplayName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.PrimaryKey("PK_AppUserLogins", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AppUsers_UserId",
+                        name: "FK_AppUserLogins_AppUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AppUsers",
                         principalColumn: "Id",
@@ -261,7 +261,7 @@ namespace EFDataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
+                name: "AppUserRoles",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(nullable: false),
@@ -269,15 +269,15 @@ namespace EFDataBase.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.PrimaryKey("PK_AppUserRoles", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AppRoles_RoleId",
+                        name: "FK_AppUserRoles_AppRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AppRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AppUsers_UserId",
+                        name: "FK_AppUserRoles_AppUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AppUsers",
                         principalColumn: "Id",
@@ -285,19 +285,19 @@ namespace EFDataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
+                name: "AppUserTokens",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.PrimaryKey("PK_AppUserTokens", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_AspNetUserTokens_AppUsers_UserId",
+                        name: "FK_AppUserTokens_AppUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AppUsers",
                         principalColumn: "Id",
@@ -440,11 +440,26 @@ namespace EFDataBase.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AppRoleClaims_RoleId",
+                table: "AppRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AppRoles",
                 column: "NormalizedName",
                 unique: true,
                 filter: "[NormalizedName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppUserClaims_UserId",
+                table: "AppUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppUserRoles_RoleId",
+                table: "AppUserRoles",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -457,26 +472,6 @@ namespace EFDataBase.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoleClaims_RoleId",
-                table: "AspNetRoleClaims",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserClaims_UserId",
-                table: "AspNetUserClaims",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserLogins_UserId",
-                table: "AspNetUserLogins",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_RoleId",
-                table: "AspNetUserRoles",
-                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_ProductId",
@@ -525,19 +520,19 @@ namespace EFDataBase.Migrations
                 name: "AppConfigs");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoleClaims");
+                name: "AppRoleClaims");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserClaims");
+                name: "AppUserClaims");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserLogins");
+                name: "AppUserLogins");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserRoles");
+                name: "AppUserRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserTokens");
+                name: "AppUserTokens");
 
             migrationBuilder.DropTable(
                 name: "Carts");
