@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Manage.ApplicationCore.DI
 {
-    public interface ISendMailService
+   // public interface ISendMailService
+    public interface IEmailSenderCus
     {
-        Task SendMail(MailContent mailContent);
+       // Task SendMail(MailContent mailContent);
         Task SendEmailAsync(string email, string subject, string htmlMessage);
     }
 }

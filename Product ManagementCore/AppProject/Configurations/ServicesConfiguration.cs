@@ -6,6 +6,7 @@ using Manage.ApplicationCore.DI.OrderAction;
 using Manage.ApplicationCore.DI.ProductAction;
 using Manage.ApplicationCore.DI.UserAction;
 using Manage.ApplicationCore.ItemShare;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace AppProject.Configurations
             services.AddScoped<ICategory, CategoryServices>();
             services.AddScoped<IUser, UserServices>();
             //services.AddTransient<MailServices>();
-            services.AddTransient<ISendMailService, SendMailService>();
+            services.AddTransient<IEmailSender, SendMailService>();
             ////services.AddScoped<IViewRenderService, ViewRenderService>();
             //services.AddSingleton<IPermission, PermissionService>();
             //services.AddSingleton<ILoaiMenu, LoaiMenuService>();

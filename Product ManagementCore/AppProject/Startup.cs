@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +41,7 @@ namespace AppProject
             services.AddOptions();
             var mailSettings = Configuration.GetSection("MailSettings");
             services.Configure<MailConfig>(mailSettings);
+
             //end mail
             services.AddDistributedMemoryCache();
             services.AddSession();
@@ -53,12 +55,12 @@ namespace AppProject
             // services.AddDbContext<CyBerDBContext>();
             var _connectionString = Configuration.GetConnectionString("SqlConnectionString");
             services.AddDbContext<CyBerDBContext>(option => option.UseSqlServer(_connectionString));
-            //services.AddIdentity<AppUser, AppRole>()
-            //    .AddEntityFrameworkStores<CyBerDBContext>()
-            //    .AddDefaultTokenProviders();
-            services.AddDefaultIdentity<AppUser>()
-               .AddEntityFrameworkStores<CyBerDBContext>()
-               .AddDefaultTokenProviders();
+            services.AddIdentity<AppUser, AppRole>()
+                .AddEntityFrameworkStores<CyBerDBContext>()
+                .AddDefaultTokenProviders();
+            //services.AddDefaultIdentity<AppUser>()
+            //   .AddEntityFrameworkStores<CyBerDBContext>()
+            //   .AddDefaultTokenProviders();
 
                // Truy cập IdentityOptions
             services.Configure<IdentityOptions>(options =>
@@ -127,7 +129,7 @@ namespace AppProject
                 endpoints.MapGet("/testmail", async context => {
 
                     // Lấy dịch vụ sendmailservice
-                    var sendmailservice = context.RequestServices.GetService<ISendMailService>();
+                    var sendmailservice = context.RequestServices.GetService<IEmailSender>();
 
                     MailContent content = new MailContent
                     {
@@ -137,7 +139,8 @@ namespace AppProject
                         Body = "<p><strong>Xin chào xuanthulab.net</strong></p>"
                     };
 
-                    await sendmailservice.SendMail(content);
+                    //await sendmailservice.SendMail(content);
+                    await sendmailservice.SendEmailAsync(content.To,content.Subject, content.Body);
                     await context.Response.WriteAsync("Send mail");
                 });
                 endpoints.MapControllerRoute(

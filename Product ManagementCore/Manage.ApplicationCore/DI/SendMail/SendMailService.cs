@@ -1,5 +1,6 @@
 ﻿using MailKit.Security;
 using Manage.ApplicationCore.ItemShare;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 //using Microsoft.Extensions.Logging;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Manage.ApplicationCore.DI
 {
-    public class SendMailService : ISendMailService
+    public class SendMailService : IEmailSender
     {
         private readonly MailConfig mailSettings;
 
