@@ -25,7 +25,8 @@ namespace AppProject.Configurations
             services.AddScoped<ICustomer, CustomerServices>();
             services.AddScoped<ICategory, CategoryServices>();
             services.AddScoped<IUser, UserServices>();
-            services.AddTransient<MailServices>();
+            //services.AddTransient<MailServices>();
+            services.AddTransient<ISendMailService, SendMailService>();
             ////services.AddScoped<IViewRenderService, ViewRenderService>();
             //services.AddSingleton<IPermission, PermissionService>();
             //services.AddSingleton<ILoaiMenu, LoaiMenuService>();

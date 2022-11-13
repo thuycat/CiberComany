@@ -3,9 +3,11 @@ using AppProject.Middlewares;
 using EFDataBase.EF;
 using EFDataBase.Models.entities;
 using EProductMain.Data.Entities;
+using Manage.ApplicationCore.DI;
 using Manage.ApplicationCore.ItemShare;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -121,17 +123,22 @@ namespace AppProject
                 endpoints.MapControllerRoute(
                     name: "areas",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapGet("/TestEmail", async (context) =>
-                {
-                    var message = await MailUtil.SendGMail("khanghoa12388@gmail.com", "dauthithuycat@gmail.com", "", "", "khanghoa12388@gmail.com", "");
-                    // await context.Response.w
-                });
-                endpoints.MapGet("/TestEmailService", async (context) =>
-                {
-                    var SendMailService = context.RequestServices.GetServices<MailServices>();
-                    var mailcontent = new mailContent();
-                  // var kq= await SendMailService.SendMail(mailcontent);
-                    // await context.Response.w
+                
+                endpoints.MapGet("/testmail", async context => {
+
+                    // Lấy dịch vụ sendmailservice
+                    var sendmailservice = context.RequestServices.GetService<ISendMailService>();
+
+                    MailContent content = new MailContent
+                    {
+                       // To = "xuanthulab.net@gmail.com",
+                        To = "dauthithuycat@gmail.com",
+                        Subject = "Kiểm tra thử",
+                        Body = "<p><strong>Xin chào xuanthulab.net</strong></p>"
+                    };
+
+                    await sendmailservice.SendMail(content);
+                    await context.Response.WriteAsync("Send mail");
                 });
                 endpoints.MapControllerRoute(
                     name: "default",

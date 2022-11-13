@@ -61,15 +61,15 @@ namespace Manage.ApplicationCore.ItemShare
         {
             _MailConfig = mailConfig.Value;
         }
-        public async Task<string> SendMail(mailContent mailContent)
+        public async Task<string> SendMail(MailContent mailContent)
         {
             try
             {
                 var email = new MimeMessage();
                 email.Sender = new MailboxAddress(_MailConfig.DisplayName, _MailConfig.Mail);
                 email.From.Add(new MailboxAddress(_MailConfig.DisplayName, _MailConfig.Mail));
-                email.To.Add(new MailboxAddress(mailContent.Name, mailContent.to));
-                email.Subject = mailContent.subject;
+                email.To.Add(new MailboxAddress(mailContent.Name, mailContent.To));
+                email.Subject = mailContent.Subject;
                 var builder = new BodyBuilder();
                 builder.HtmlBody = mailContent.Body;
                 // builder.TextBody;
@@ -99,11 +99,11 @@ namespace Manage.ApplicationCore.ItemShare
         public string Host { get; set; }
         public int Port { get; set; }
     }
-    public class mailContent
+    public class MailContent
     {
         public string Name { get; set; }
-        public string to { get; set; }
-        public string subject { get; set; }
+        public string To { get; set; }
+        public string Subject { get; set; }
         public string Body { get; set; }
 
     }
