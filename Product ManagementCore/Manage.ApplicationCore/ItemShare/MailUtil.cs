@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Extensions.Options;
 using MimeKit;
 using System;
 using System.Collections.Generic;
@@ -56,7 +57,7 @@ namespace Manage.ApplicationCore.ItemShare
     public class MailServices
     {
         MailConfig _MailConfig { get; set; }
-        public MailServices(Microsoft.Extensions.Options.IOptions<MailConfig> mailConfig)
+        public MailServices(IOptions<MailConfig> mailConfig)
         {
             _MailConfig = mailConfig.Value;
         }

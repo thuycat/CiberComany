@@ -45,6 +45,7 @@ namespace AppProject
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddMyServices();
+
             services.AddCustomService(Configuration);
             //đăng ýk Identity
             // services.AddDbContext<CyBerDBContext>();
@@ -57,10 +58,7 @@ namespace AppProject
                .AddEntityFrameworkStores<CyBerDBContext>()
                .AddDefaultTokenProviders();
 
-            //services.AddIdentity<IdentityUser, IdentityRole>()
-            //                .AddEntityFrameworkStores<AuthDBContext>()
-            //                .AddDefaultTokenProviders();
-            // Truy cập IdentityOptions
+               // Truy cập IdentityOptions
             services.Configure<IdentityOptions>(options =>
             {
                 // Thiết lập về Password
@@ -89,16 +87,7 @@ namespace AppProject
 
             });
 
-            //git branch=> kiểm tra xem đang ở bran nào
-            //git branch -r => kiểm tra các bran kể cả bran trên  remote
-            //git clone=> lấy source code về
-            //git status: ccheck file nào còn check out
-            //chuyển nhánh: git checkout BranName
-            // tạo bran: git bran newbranName
-            // Identity:
-            // Authentication: xác định danh tính,login logout..
-            //Authorization: xac định quyền truy cập
-            //-cung cấp quarn lý use: sign up, user, role....
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,8 +114,8 @@ namespace AppProject
             // authen
             app.UseAuthentication();
             app.UseAuthorization();
-            SignInManager<AppUser> s;
-            UserManager<AppUser> u;
+            //SignInManager<AppUser> s;
+            //UserManager<AppUser> u;
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -141,7 +130,7 @@ namespace AppProject
                 {
                     var SendMailService = context.RequestServices.GetServices<MailServices>();
                     var mailcontent = new mailContent();
-                   //var kq= await SendMailService.SendMail(mailcontent);
+                  // var kq= await SendMailService.SendMail(mailcontent);
                     // await context.Response.w
                 });
                 endpoints.MapControllerRoute(
@@ -155,6 +144,17 @@ namespace AppProject
         }
     }
 }
+//git branch=> kiểm tra xem đang ở bran nào
+//git branch -r => kiểm tra các bran kể cả bran trên  remote
+//git clone=> lấy source code về
+//git status: ccheck file nào còn check out
+//chuyển nhánh: git checkout BranName
+// tạo bran: git bran newbranName
+// Identity:
+// Authentication: xác định danh tính,login logout..
+//Authorization: xac định quyền truy cập
+//-cung cấp quarn lý use: sign up, user, role....
+
 //magration
 // dotnet ef magrations list=> em danh sách magration
 //dotnet ef magrations add Migrationname=> them moi migrations => Add-Migration NameMi
