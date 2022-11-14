@@ -77,7 +77,7 @@ namespace EFDataBase.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("BirthDay")
+                    b.Property<DateTime?>("BirthDay")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -92,6 +92,9 @@ namespace EFDataBase.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HomeAdress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -332,7 +335,7 @@ namespace EFDataBase.Migrations
                     b.Property<DateTime>("OrderDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 11, 8, 21, 29, 39, 940, DateTimeKind.Local).AddTicks(3259));
+                        .HasDefaultValue(new DateTime(2022, 11, 14, 22, 26, 47, 63, DateTimeKind.Local).AddTicks(546));
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");

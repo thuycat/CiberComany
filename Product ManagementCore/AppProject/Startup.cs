@@ -90,7 +90,14 @@ namespace AppProject
                 //Identity/Account/Manage
 
             });
-
+            services.ConfigureApplicationCookie(options =>
+            {
+                //options.LoginPath = "/Identity/Account/Login";
+                options.LoginPath = "/Login/";
+                options.LogoutPath = "/logout/";
+               // options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.AccessDeniedPath = "/khongduoctruycap.html";
+            });
             
         }
 

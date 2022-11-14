@@ -8,11 +8,13 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using App.Areas.Identity.Models.AccountViewModels;
-using App.ExtendMethods;
-using App.Models;
+using EProductMain.Data.Entities;
+//using App.ExtendMethods;
+//using App.Models;
 using App.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
@@ -50,7 +52,14 @@ namespace App.Areas.Identity.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
-
+        [HttpGet("/logout/")]
+        [AllowAnonymous]
+        public async Task<IActionResult>  LogOff(string returnUrl = null)
+        {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User đăng xuất");
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
         //
         // POST: /Account/Login
         [HttpPost("/login/")]
@@ -83,7 +92,7 @@ namespace App.Areas.Identity.Controllers
                 {
                    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 }
-                
+              
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning(2, "Tài khoản bị khóa");
@@ -91,7 +100,7 @@ namespace App.Areas.Identity.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("Không đăng nhập được.");
+                   // ModelState.AddModelError("Không đăng nhập được.");
                     return View(model);
                 }
             }
@@ -166,7 +175,7 @@ namespace App.Areas.Identity.Controllers
 
                 }
 
-                ModelState.AddModelError(result);
+               // ModelState.AddModelError(result);
             }
 
             // If we got this far, something failed, redisplay form
@@ -345,7 +354,7 @@ namespace App.Areas.Identity.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("Không tạo được tài khoản mới");
+                       // ModelState.AddModelError("Không tạo được tài khoản mới");
                         return View();   
                     }
                 }           
@@ -367,7 +376,7 @@ namespace App.Areas.Identity.Controllers
                         return LocalRedirect(returnUrl);
                     }
                 }
-                ModelState.AddModelError(result);
+               /// ModelState.AddModelError(result);
             }
 
             ViewData["ReturnUrl"] = returnUrl;
@@ -460,7 +469,7 @@ namespace App.Areas.Identity.Controllers
             {
                 return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
             }
-            ModelState.AddModelError(result);
+           // ModelState.AddModelError(result);
             return View();
         }
 
@@ -525,7 +534,7 @@ namespace App.Areas.Identity.Controllers
             }
             else if (model.SelectedProvider == "Phone")
             {
-                await _emailSender.SendSmsAsync(await _userManager.GetPhoneNumberAsync(user), message);
+              //  await _emailSender.SendSmsAsync(await _userManager.GetPhoneNumberAsync(user), message);
             }
 
             return RedirectToAction(nameof(VerifyCode), new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });

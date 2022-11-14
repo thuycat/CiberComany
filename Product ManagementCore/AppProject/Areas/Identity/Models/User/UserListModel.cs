@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using App.Models;
+
+using EProductMain.Data.Entities;
 
 namespace App.Areas.Identity.Models.UserViewModels
 {

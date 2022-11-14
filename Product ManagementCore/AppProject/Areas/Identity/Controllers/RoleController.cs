@@ -7,10 +7,12 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using App.Areas.Identity.Models.ManageViewModels;
 using App.Areas.Identity.Models.RoleViewModels;
-using App.Data;
-using App.ExtendMethods;
-using App.Models;
-using App.Services;
+using EFDataBase.EF;
+using EProductMain.Data.Entities;
+//using App.Data;
+//using App.ExtendMethods;
+//using App.Models;
+//using App.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +22,7 @@ using Microsoft.Extensions.Logging;
 namespace App.Areas.Identity.Controllers
 {
 
-    [Authorize(Roles = RoleName.Administrator)]
+    //[Authorize(Roles = RoleName.Administrator)]
     [Area("Identity")]
     [Route("/Role/[action]")]
     public class RoleController : Controller
@@ -28,11 +30,11 @@ namespace App.Areas.Identity.Controllers
         
         private readonly ILogger<RoleController> _logger;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly AppDbContext _context;
+        private readonly CyBerDBContext _context;
 
         private readonly UserManager<AppUser> _userManager;
 
-        public RoleController(ILogger<RoleController> logger, RoleManager<IdentityRole> roleManager, AppDbContext context, UserManager<AppUser> userManager)
+        public RoleController(ILogger<RoleController> logger, RoleManager<IdentityRole> roleManager, CyBerDBContext context, UserManager<AppUser> userManager)
         {
             _logger = logger;
             _roleManager = roleManager;
@@ -94,7 +96,7 @@ namespace App.Areas.Identity.Controllers
             }
             else
             {
-                ModelState.AddModelError(result);
+               // ModelState.AddModelError(result);
             }
             return View();
         }     
@@ -130,7 +132,7 @@ namespace App.Areas.Identity.Controllers
             }
             else
             {
-                ModelState.AddModelError(result);
+                //ModelState.AddModelError(result);
             }
             return View(role);
         }     
@@ -146,7 +148,7 @@ namespace App.Areas.Identity.Controllers
                 return NotFound("Không tìm thấy role");
             } 
             model.Name = role.Name;
-            model.Claims = await _context.RoleClaims.Where(rc => rc.RoleId == role.Id).ToListAsync();
+           // model.Claims = await _context.RoleClaims.Where(rc => rc.RoleId == role.Id).ToListAsync();
             model.role = role;
             ModelState.Clear();
             return View(model);
@@ -164,7 +166,7 @@ namespace App.Areas.Identity.Controllers
             {
                 return NotFound("Không tìm thấy role");
             } 
-            model.Claims = await _context.RoleClaims.Where(rc => rc.RoleId == role.Id).ToListAsync();
+           // model.Claims = await _context.RoleClaims.Where(rc => rc.RoleId == role.Id).ToListAsync();
             model.role = role;
             if (!ModelState.IsValid)
             {
@@ -181,7 +183,7 @@ namespace App.Areas.Identity.Controllers
             }
             else
             {
-                ModelState.AddModelError(result);
+               // ModelState.AddModelError(result);
             }
 
             return View(model);
@@ -231,7 +233,7 @@ namespace App.Areas.Identity.Controllers
             
             if (!result.Succeeded)
             {
-                ModelState.AddModelError(result);
+               // ModelState.AddModelError(result);
                 return View(model);
             }
             
@@ -248,16 +250,17 @@ namespace App.Areas.Identity.Controllers
             var claim = _context.RoleClaims.Where(c => c.Id == claimid).FirstOrDefault();
             if (claim == null) return NotFound("Không tìm thấy role");
 
-            var role = await _roleManager.FindByIdAsync(claim.RoleId);
-            if (role == null) return NotFound("Không tìm thấy role");
-            ViewBag.claimid = claimid;
+          ///  var role = await _roleManager.FindByIdAsync(claim.RoleId);
+            //if (role == null) return NotFound("Không tìm thấy role");
+            //ViewBag.claimid = claimid;
 
             var Input = new EditClaimModel()
-            {
-                ClaimType = claim.ClaimType,
-                ClaimValue = claim.ClaimValue,
-                role = role
-            };
+            //{
+            //    ClaimType = claim.ClaimType,
+            //    ClaimValue = claim.ClaimValue,
+            //    role = role
+            //}
+            ;
 
 
             return View(Input);
@@ -273,18 +276,18 @@ namespace App.Areas.Identity.Controllers
 
             ViewBag.claimid = claimid;
 
-            var role = await _roleManager.FindByIdAsync(claim.RoleId);
-            if (role == null) return NotFound("Không tìm thấy role");
-            Input.role = role;
+           // var role = await _roleManager.FindByIdAsync(claim.RoleId);
+            //if (role == null) return NotFound("Không tìm thấy role");
+            //Input.role = role;
             if  (!ModelState.IsValid)
             {
                 return View(Input);
             }
-            if (_context.RoleClaims.Any(c => c.RoleId == role.Id && c.ClaimType == Input.ClaimType && c.ClaimValue == Input.ClaimValue && c.Id != claim.Id))
-            {
-                ModelState.AddModelError(string.Empty, "Claim này đã có trong role");
-                return View(Input);
-            }
+            //if (_context.RoleClaims.Any(c => c.RoleId == role.Id && c.ClaimType == Input.ClaimType && c.ClaimValue == Input.ClaimValue && c.Id != claim.Id))
+            //{
+            //    ModelState.AddModelError(string.Empty, "Claim này đã có trong role");
+            //    return View(Input);
+            //}
  
 
             claim.ClaimType = Input.ClaimType;
@@ -294,7 +297,8 @@ namespace App.Areas.Identity.Controllers
             
             StatusMessage = "Vừa cập nhật claim";
             
-            return RedirectToAction("Edit", new {roleid = role.Id});
+           // return RedirectToAction("Edit", new {roleid = role.Id});
+            return RedirectToAction("Edit", new {roleid = ""});
         }        
         // POST: /Role/EditRoleClaim/claimid
         [HttpPost("{claimid:int}")]        
@@ -304,26 +308,27 @@ namespace App.Areas.Identity.Controllers
             var claim = _context.RoleClaims.Where(c => c.Id == claimid).FirstOrDefault();
             if (claim == null) return NotFound("Không tìm thấy role");
 
-            var role = await _roleManager.FindByIdAsync(claim.RoleId);
-            if (role == null) return NotFound("Không tìm thấy role");
-            Input.role = role;
-            if  (!ModelState.IsValid)
-            {
-                return View(Input);
-            }
-            if (_context.RoleClaims.Any(c => c.RoleId == role.Id && c.ClaimType == Input.ClaimType && c.ClaimValue == Input.ClaimValue && c.Id != claim.Id))
-            {
-                ModelState.AddModelError(string.Empty, "Claim này đã có trong role");
-                return View(Input);
-            }
+            //var role = await _roleManager.FindByIdAsync(claim.RoleId);
+            //if (role == null) return NotFound("Không tìm thấy role");
+            //Input.role = role;
+            //if  (!ModelState.IsValid)
+            //{
+            //    return View(Input);
+            //}
+            //if (_context.RoleClaims.Any(c => c.RoleId == role.Id && c.ClaimType == Input.ClaimType && c.ClaimValue == Input.ClaimValue && c.Id != claim.Id))
+            //{
+            //    ModelState.AddModelError(string.Empty, "Claim này đã có trong role");
+            //    return View(Input);
+            //}
  
 
-            await _roleManager.RemoveClaimAsync(role, new Claim(claim.ClaimType, claim.ClaimValue));
+            //await _roleManager.RemoveClaimAsync(role, new Claim(claim.ClaimType, claim.ClaimValue));
             
             StatusMessage = "Vừa xóa claim";
 
             
-            return RedirectToAction("Edit", new {roleid = role.Id});
+            return RedirectToAction("Edit", new {roleid = ""});
+           // return RedirectToAction("Edit", new {roleid = role.Id});
         }        
 
 

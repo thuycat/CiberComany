@@ -14,17 +14,17 @@
     @if (SignInManager.IsSignedIn(User))
     {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-page="/Account/Manage" asp-area="Identity">Xin chào @UserManager.GetUserName(User)</a>
-        <a class="nav-link text-dark" asp-page="/Account/Logout" asp-area="Identity"> Đăng xuất</a>
+        <a class="nav-link text-dark" asp-controller="Accoun" asp-action="Manage" asp-area="Identity">Xin chào @UserManager.GetUserName(User)</a>
+        <a class="nav-link text-dark" asp-controller="Account" asp-action="LogOff" asp-area="Identity"> Đăng xuất</a>
     </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-page="/Account/Register" asp-area="Identity"> Đăng ký</a>
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Register" asp-area="Identity"> Đăng ký</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-page="/Account/Login" asp-area="Identity"> Đăng nhập</a>
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login" asp-area="Identity"> Đăng nhập</a>
         </li>
     }
 

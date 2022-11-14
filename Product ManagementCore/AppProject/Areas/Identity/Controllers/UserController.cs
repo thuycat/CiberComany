@@ -10,10 +10,8 @@ using App.Areas.Identity.Models.AccountViewModels;
 using App.Areas.Identity.Models.ManageViewModels;
 using App.Areas.Identity.Models.RoleViewModels;
 using App.Areas.Identity.Models.UserViewModels;
-using App.Data;
-using App.ExtendMethods;
-using App.Models;
-using App.Services;
+using EFDataBase.EF;
+using EProductMain.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +22,7 @@ using Microsoft.Extensions.Logging;
 namespace App.Areas.Identity.Controllers
 {
 
-    [Authorize(Roles = RoleName.Administrator)]
+    //[Authorize(Roles = RoleName.Administrator)]
     [Area("Identity")]
     [Route("/ManageUser/[action]")]
     public class UserController : Controller
@@ -32,11 +30,11 @@ namespace App.Areas.Identity.Controllers
         
         private readonly ILogger<RoleController> _logger;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly AppDbContext _context;
+        private readonly CyBerDBContext _context;
 
         private readonly UserManager<AppUser> _userManager;
 
-        public UserController(ILogger<RoleController> logger, RoleManager<IdentityRole> roleManager, AppDbContext context, UserManager<AppUser> userManager)
+        public UserController(ILogger<RoleController> logger, RoleManager<IdentityRole> roleManager, CyBerDBContext context, UserManager<AppUser> userManager)
         {
             _logger = logger;
             _roleManager = roleManager;
@@ -143,14 +141,14 @@ namespace App.Areas.Identity.Controllers
             var resultDelete = await _userManager.RemoveFromRolesAsync(model.user,deleteRoles);
             if (!resultDelete.Succeeded)
             {
-                ModelState.AddModelError(resultDelete);
+               // ModelState.AddModelError(resultDelete);
                 return View(model);
             }
             
             var resultAdd = await _userManager.AddToRolesAsync(model.user,addRoles);
             if (!resultAdd.Succeeded)
             {
-                ModelState.AddModelError(resultAdd);
+               // ModelState.AddModelError(resultAdd);
                 return View(model);
             }
 
@@ -256,7 +254,7 @@ namespace App.Areas.Identity.Controllers
         public async Task<IActionResult> EditClaim(int claimid)
         {
             var userclaim = _context.UserClaims.Where(c => c.Id == claimid).FirstOrDefault();
-            var user = await _userManager.FindByIdAsync(userclaim.UserId);
+            var user = await _userManager.FindByIdAsync(userclaim.UserId.ToString());
 
             if (user == null) return NotFound("Không tìm thấy user");
 
@@ -275,7 +273,7 @@ namespace App.Areas.Identity.Controllers
         public async Task<IActionResult> EditClaim(int claimid, AddUserClaimModel model)
         {
             var userclaim = _context.UserClaims.Where(c => c.Id == claimid).FirstOrDefault();
-            var user = await _userManager.FindByIdAsync(userclaim.UserId);
+            var user = await _userManager.FindByIdAsync(userclaim.UserId.ToString());
             if (user == null) return NotFound("Không tìm thấy user");
 
             if (!ModelState.IsValid) return View("AddClaim", model);
@@ -285,7 +283,7 @@ namespace App.Areas.Identity.Controllers
                 && c.ClaimValue == model.ClaimValue 
                 && c.Id != userclaim.Id))
                 {
-                    ModelState.AddModelError("Claim này đã có");
+                    //ModelState.AddModelError("Claim này đã có");
                     return View("AddClaim", model);
                 }
 
@@ -306,7 +304,7 @@ namespace App.Areas.Identity.Controllers
         public async Task<IActionResult> DeleteClaimAsync(int claimid)
         {
             var userclaim = _context.UserClaims.Where(c => c.Id == claimid).FirstOrDefault();
-            var user = await _userManager.FindByIdAsync(userclaim.UserId);
+            var user = await _userManager.FindByIdAsync(userclaim.UserId.ToString());
 
             if (user == null) return NotFound("Không tìm thấy user");
 
@@ -320,14 +318,15 @@ namespace App.Areas.Identity.Controllers
         private async Task GetClaims(AddUserRoleModel model)
         {
             var listRoles = from r in _context.Roles
-                join ur in _context.UserRoles on r.Id equals ur.RoleId
-                where ur.UserId == model.user.Id
-                select r;
+                            join ur in _context.UserRoles on r.Id equals ur.RoleId
+                            where ur.UserId == model.user.Id
+                            select r;
 
-            var _claimsInRole  = from c in _context.RoleClaims
-                                 join r in listRoles on c.RoleId  equals r.Id
-                                 select c;
+            var _claimsInRole = from c in _context.RoleClaims
+                                join r in listRoles on c.RoleId equals r.Id
+                                select c;
             model.claimsInRole = await _claimsInRole.ToListAsync();
+          
 
 
            model.claimsInUserClaim  = await (from c in _context.UserClaims

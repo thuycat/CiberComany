@@ -4,11 +4,13 @@
 using System.Linq;
 using System.Threading.Tasks;
 using App.Areas.Identity.Models.ManageViewModels;
-using App.ExtendMethods;
-using App.Models;
-using App.Services;
+using EProductMain.Data.Entities;
+//using App.ExtendMethods;
+//using App.Models;
+//using App.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -62,7 +64,7 @@ namespace App.Areas.Identity.Controllers
                 AuthenticatorKey = await _userManager.GetAuthenticatorKeyAsync(user),
                 profile = new EditExtraProfileModel()
                 {
-                    BirthDate = user.BirthDate,
+                    BirthDate = user.BirthDay,
                     HomeAdress = user.HomeAdress,
                     UserName = user.UserName,
                     UserEmail = user.Email,
@@ -115,7 +117,7 @@ namespace App.Areas.Identity.Controllers
                     _logger.LogInformation(3, "User changed their password successfully.");
                     return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangePasswordSuccess });
                 }
-                ModelState.AddModelError(result);
+               // ModelState.AddModelError(result);
                 return View(model);
             }
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
@@ -148,7 +150,7 @@ namespace App.Areas.Identity.Controllers
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction(nameof(Index), new { Message = ManageMessageId.SetPasswordSuccess });
                 }
-                ModelState.AddModelError(result);
+               // ModelState.AddModelError(result);
                 return View(model);
             }
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
@@ -252,7 +254,7 @@ namespace App.Areas.Identity.Controllers
             // Generate the token and send it
             var user = await GetCurrentUserAsync();
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, model.PhoneNumber);
-            await _emailSender.SendSmsAsync(model.PhoneNumber, "Mã xác thực là: " + code);
+           // await _emailSender.SendSmsAsync(model.PhoneNumber, "Mã xác thực là: " + code);
             return RedirectToAction(nameof(VerifyPhoneNumber), new { PhoneNumber = model.PhoneNumber });
         }
         //
@@ -377,7 +379,7 @@ namespace App.Areas.Identity.Controllers
             
             var model = new EditExtraProfileModel()
             {
-                BirthDate = user.BirthDate,
+                BirthDate = user.BirthDay,
                 HomeAdress = user.HomeAdress,
                 UserName = user.UserName,
                 UserEmail = user.Email,
@@ -391,7 +393,7 @@ namespace App.Areas.Identity.Controllers
             var user = await GetCurrentUserAsync();
 
             user.HomeAdress = model.HomeAdress;
-            user.BirthDate = model.BirthDate;
+            user.BirthDay = model.BirthDate;
             await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
