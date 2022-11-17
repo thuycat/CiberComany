@@ -86,6 +86,7 @@ namespace AppProject
                 // Cấu hình đăng nhập.
                 options.SignIn.RequireConfirmedEmail = true;            // Cấu hình xác thực địa chỉ email (email phải tồn tại)
                 options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
+                options.User.RequireUniqueEmail = true; // xacs nhan email moi duoc dang nhap
                 //Identity/Account/Login
                 //Identity/Account/Manage
 

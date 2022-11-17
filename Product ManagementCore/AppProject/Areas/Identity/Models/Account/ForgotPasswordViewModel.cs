@@ -11,8 +11,9 @@ namespace App.Areas.Identity.Models.AccountViewModels
 {
     public class ForgotPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage ="Phải nhâp email")]
+        [EmailAddress(ErrorMessage ="Phải nhập đúng định dạng email")]
+
         public string Email { get; set; }
     }
 }

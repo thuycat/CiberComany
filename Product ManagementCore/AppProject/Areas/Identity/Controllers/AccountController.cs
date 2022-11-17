@@ -71,7 +71,7 @@ namespace App.Areas.Identity.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                 
+                //thieets lập lockoutOnFailure=true để xác nhận đăng nhập thất bại thì khóa
                 var result = await _signInManager.PasswordSignInAsync(model.UserNameOrEmail, model.Password, model.RememberMe, lockoutOnFailure: true);                
                 // Tìm UserName theo Email, đăng nhập lại
                 if ((!result.Succeeded) && AppUtilities.IsValidEmail(model.UserNameOrEmail))
@@ -169,6 +169,7 @@ namespace App.Areas.Identity.Controllers
                     }
                     else
                     {
+                        //isPersistent =true=> lưu c=cooki lân sau tự động đăng nhập
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
