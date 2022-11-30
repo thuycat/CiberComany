@@ -9,9 +9,9 @@ using EProductMain.Data.Entities;
 
 namespace Manage.ApplicationCore.DI.ProductAction
 {
-  public  interface IProduct:IBaseRepos<Product>
+  public  interface IProduct:IBaseRepos<ProductCy>
     {
-        Task<MethodResult<List<Product>>> GetListEntity(ProductQuery queryData);
+        Task<MethodResult<List<ProductCy>>> GetListEntity(ProductQuery queryData);
         Task<MethodResult<bool>> CheckQuantity(int Id, int Amout);
        // string BuildCauDieuKien(ProductQuery loaiMenuQuery);
 

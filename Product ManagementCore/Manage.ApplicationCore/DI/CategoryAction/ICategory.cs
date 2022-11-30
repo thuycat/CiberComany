@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Manage.ApplicationCore.DI.CategoryAction
 {
-   public interface ICategory:IBaseRepos<Category>
+   public interface ICategory:IBaseRepos<CategoryCy>
     {
-        Task<MethodResult<List<Category>>> GetListEntity(CategoryQuery queryData);
+        Task<MethodResult<List<CategoryCy>>> GetListEntity(CategoryQuery queryData);
        
         string BuildCauDieuKien(CategoryQuery loaiMenuQuery);
 

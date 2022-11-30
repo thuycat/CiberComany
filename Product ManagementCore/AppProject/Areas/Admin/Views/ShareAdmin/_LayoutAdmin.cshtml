@@ -28,19 +28,19 @@
     <link href="~/vendor/wow/animate.css" rel="stylesheet" media="all">
     <link href="~/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
     <link href="~/vendor/slick/slick.css" rel="stylesheet" media="all">
-    <link href="~/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    @*<link href="~/vendor/select2/select2.min.css" rel="stylesheet" media="all">*@
     <link href="~/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
     <link href="~/vendor/vector-map/jqvmap.min.css" rel="stylesheet" media="all">
 
-   
-  
+
+
     <link rel="stylesheet" type="text/css" href="~/Content/Plugins/bootstrap-3/css/bootstrap.css" />
-    @*<link rel="stylesheet" type="text/css" href="~/Content/Plugins/Select2/css/select2.min.css" />*@
+    <link rel="stylesheet" type="text/css" href="~/Content/Plugins/Select2/css/select2.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/Plugins/Kendo/styles/kendo.bootstrap-v4.min.css" />
-    <link rel="stylesheet" type="text/css" href="~/Content/Plugins/Kendo/styles/kendo.default.mobile.min.css" />  
+    <link rel="stylesheet" type="text/css" href="~/Content/Plugins/Kendo/styles/kendo.default.mobile.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/Plugins/bootstrap-3/datetime/daterangepicker.css" />
- 
-   
+
+
 
     <!-- Main CSS-->
     <link href="~/css/theme.css" rel="stylesheet" media="all" />
@@ -99,16 +99,16 @@
 
                         <img src="~/images/icon/avatar-big-01.jpg" alt="John Doe" />
                     </div>
-                    @{
+                    @*@{
 
-                        var emailadmin = new Byte[20];
-                        bool emailok = Context.Session.TryGetValue("NameLogin", out emailadmin);
-                        var data = System.Text.Encoding.UTF8.GetString(emailadmin);
-                        if (emailok)
-                        {
-                            <h4 class="name">@data</h4>
-                        }
-                    }
+                            var emailadmin = new Byte[20];
+                            bool emailok = Context.Session.TryGetValue("NameLogin", out emailadmin);
+                            var data = System.Text.Encoding.UTF8.GetString(emailadmin);
+                            if (emailok)
+                            {
+                                <h4 class="name">@data</h4>
+                            }
+                        }*@
 
                     <a href="#">Sign out</a>
                 </div>
@@ -126,16 +126,16 @@
                                     <a href="/Admin/User">
                                         <i class="fas fa-tachometer-alt"></i>User
                                     </a>
-                                </li> 
+                                </li>
                                 <li>
                                     <a href="/Admin/Home">
                                         <i class="fas fa-tachometer-alt"></i>Order
                                     </a>
                                 </li>
-                              
+
                             </ul>
                         </li>
-                        
+
                     </ul>
                 </nav>
             </div>
@@ -266,9 +266,9 @@
 
                             <img src="~/images/icon/avatar-big-01.jpg" alt="John Doe" />
                         </div>
-                       
-                            <a href="#">Sign out</a>
-                        </div>
+
+                        <a href="#">Sign out</a>
+                    </div>
                     <nav class="navbar-sidebar2">
                         <ul class="list-unstyled navbar__list">
                             <li class="active has-sub">
@@ -284,16 +284,15 @@
                                             <i class="fas fa-tachometer-alt"></i>User
                                         </a>
                                     </li>
-                                
+
                                 </ul>
                             </li>
-                         
+
                         </ul>
                     </nav>
                 </div>
             </aside>
             <!-- END HEADER DESKTOP-->
-           
             <!-- END BREADCRUMB-->
             <!-- STATISTIC-->
             <section class="statistic">
@@ -302,12 +301,6 @@
                 </main>
             </section>
             <!-- END STATISTIC-->
-
-
-
-
-
-           
             <!-- END PAGE CONTAINER-->
         </div>
 
@@ -333,13 +326,12 @@
     <script src="~/vendor/circle-progress/circle-progress.min.js"></script>
     <script src="~/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="~/vendor/chartjs/Chart.bundle.min.js"></script>
-    @*<script src="~/vendor/select2/select2.min.js">*@
-    @*</script>*@
+
     <script src="~/vendor/vector-map/jquery.vmap.js"></script>
     <script src="~/vendor/vector-map/jquery.vmap.min.js"></script>
     <script src="~/vendor/vector-map/jquery.vmap.sampledata.js"></script>
     <script src="~/vendor/vector-map/jquery.vmap.world.js"></script>
-
+    <script type="text/javascript" src="~/Content/Plugins/ckeditor/ckeditor.js"></script>
     <script src="~/Content/Plugins/Select2/js/select2.min.js"></script>
 
     <!--Khai báo sử dụng Jquery - Bootstrap-->
@@ -364,6 +356,7 @@
 
     <script type="text/javascript" src="~/Content/Scripts/Common.js"></script>
     <script type="text/javascript" src="~/Content/js/app.js"></script>
+    
     @RenderSection("jsUpload", required: false)
     @RenderSection("javascript", required: false)
     @RenderSection("javascriptFormc1", required: false)

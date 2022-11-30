@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Manage.ApplicationCore.DI.OrderAction
 {
-    public class OrdersServices : BaseReposServices<Order>, IOrder
+    public class OrdersServices : BaseReposServices<OrderCys>, IOrder
     {
         public OrdersServices(Microsoft.Extensions.Configuration.IConfiguration configuration, IActionGeneral IActionGeneral) : base(configuration, IActionGeneral)
         {
@@ -51,7 +51,7 @@ namespace Manage.ApplicationCore.DI.OrderAction
 
             return string.Join(" AND ", cauDieuKienAND);
         }
-        public async Task<MethodResult<List<Order>>> GetListEntity(OrdersQuery queryData)
+        public async Task<MethodResult<List<OrderCys>>> GetListEntity(OrdersQuery queryData)
         {
             using (var conn = GetOpenConnection())
             {
@@ -70,13 +70,13 @@ namespace Manage.ApplicationCore.DI.OrderAction
                         queryCount = $" WHERE {queryData.buildQuery}";
 
                     var count = await conn.QueryAsync<int>($"SELECT COUNT(*) FROM {_tableName}{queryCount}");
-                    List<Order> listItem = (await conn.QueryAsync<Order>(getList)).ToList();
+                    List<OrderCys> listItem = (await conn.QueryAsync<OrderCys>(getList)).ToList();
 
-                    return MethodResult<List<Order>>.ResultWithData(listItem, "Thành công!", count.FirstOrDefault());
+                    return MethodResult<List<OrderCys>>.ResultWithData(listItem, "Thành công!", count.FirstOrDefault());
                 }
                 catch (Exception e)
                 {
-                    return MethodResult<List<Order>>.ResultWithError(e.ToString());
+                    return MethodResult<List<OrderCys>>.ResultWithError(e.ToString());
                 }
 
             }
@@ -92,9 +92,9 @@ namespace Manage.ApplicationCore.DI.OrderAction
                 {
 
                     var sqlCOut = @"select COUNT(*)
-                        from Orders as Ord 
-                        inner join Product as P on p.id = Ord.ProductId
-                        inner join Category as c on p.CategoryId = c.Id
+                        from OrderCys as Ord 
+                        inner join ProductCy as P on p.id = Ord.ProductId
+                        inner join CategoryCy as c on p.CategoryId = c.Id
                         inner join Customer as cus on cus.Id = Ord.CustomerId";
                     string queryCount = "";
                     if (queryData.IDCate > 0)
@@ -127,9 +127,9 @@ namespace Manage.ApplicationCore.DI.OrderAction
                     }
                     var sql = @" select " + TOP + @" Ord.Id, Ord.OrderDate, Ord.Amount, p.Name as N'productName' , c.Name as N'CateGoryName',
                         cus.Name as N'CustomerName'
-                        from Orders as Ord 
-                        inner join Product as P on p.id = Ord.ProductId
-                        inner join Category as c on p.CategoryId = c.Id
+                        from OrderCys as Ord 
+                        inner join ProductCy as P on p.id = Ord.ProductId
+                        inner join CategoryCy as c on p.CategoryId = c.Id
                         inner join Customer as cus on cus.Id = Ord.CustomerId";
                     //string getList = buildQuery(queryData);
                     var count = await conn.QueryAsync<int>(sqlCOut + queryCount);
@@ -154,11 +154,11 @@ namespace Manage.ApplicationCore.DI.OrderAction
                 {
 
                     var sql = @"select Ord.Id,p.id as N'ProductId', cus.Id as N'CustomerId' , Ord.OrderDate, Ord.Amount, p.Name, c.Name as N'CateGoryName', cus.Name 
-                from Orders as Ord 
-                inner join Product as P on p.id = Ord.ProductId
-                inner join Category as c on p.CategoryId = c.Id
+                from OrderCys as Ord 
+                inner join ProductCy as P on p.id = Ord.ProductId
+                inner join CategoryCy as c on p.CategoryId = c.Id
                 inner join Customer as cus on cus.Id = Ord.CustomerId";
-                    var Orders = await conn.QueryAsync<OrderJson, Product, Customer, OrderJson>
+                    var Orders = await conn.QueryAsync<OrderJson, ProductCy, Customer, OrderJson>
                         (sql, (Orders, product, Customer) =>
                         {
                            // Orders.Product = product;

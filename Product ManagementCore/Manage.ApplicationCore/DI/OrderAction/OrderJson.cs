@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Manage.ApplicationCore.DI.OrderAction
 {
-    public class OrderJson : Order
+    public class OrderJson : OrderCys
     {
         public int idOr
         {

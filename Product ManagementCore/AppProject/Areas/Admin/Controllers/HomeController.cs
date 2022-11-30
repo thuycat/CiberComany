@@ -49,7 +49,7 @@ namespace AppProject.Areas.Admin.Controllers
 
             ViewBag.Custom = (await _ICustomer.GetListEntity(new CustomerQuery() { listField = new List<string>() { "Id", "Name" } })).data;
             ViewBag.Product = (await _IProduct.GetListEntity(new ProductQuery() { listField = new List<string>() { "Id", "Name" } })).data;
-            Order data = new Order();
+            OrderCys data = new OrderCys();
             if (!string.IsNullOrEmpty(ID))
             {
                 var dataresult = await _IOrder.getDataIDAsync(ID);
@@ -75,7 +75,7 @@ namespace AppProject.Areas.Admin.Controllers
             }
             catch { }
 
-            Order data = new Order();
+            OrderCys data = new OrderCys();
             if (!string.IsNullOrEmpty(ID))
             {
                 var dataresult = await _IOrder.getDataIDAsync(ID);

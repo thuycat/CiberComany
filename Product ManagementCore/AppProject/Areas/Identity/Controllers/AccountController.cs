@@ -19,6 +19,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System.Collections;
+using Microsoft.AspNetCore.Authentication;
+using System.Collections.Generic;
 
 namespace App.Areas.Identity.Controllers
 {
@@ -31,7 +34,7 @@ namespace App.Areas.Identity.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<AccountController> _logger;
-
+        public  IList<AuthenticationScheme> ExternalLogins { get; set; }
         public AccountController(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
@@ -120,10 +123,12 @@ namespace App.Areas.Identity.Controllers
         // GET: /Account/Register
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register(string returnUrl = null)
+        public   IActionResult Register(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             ViewData["ReturnUrl"] = returnUrl;
+            // ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+           // ExternalLogins=
             return View();
         }
         //
@@ -212,6 +217,7 @@ namespace App.Areas.Identity.Controllers
 
         //
         // POST: /Account/ExternalLogin
+        //sử dụng dịch vụ ngoài
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -260,6 +266,8 @@ namespace App.Areas.Identity.Controllers
             }
             else
             {
+                //có tài khoản, chưa liên kết=> liên kết tài khoản với dịch vụ ngoài
+                //chưa có tài khoản=> tạo tài khoản, liên kết, đăng nhập
                 // If the user does not have an account, then ask the user to create an account.
                 ViewData["ReturnUrl"] = returnUrl;
                 ViewData["ProviderDisplayName"] = info.ProviderDisplayName;

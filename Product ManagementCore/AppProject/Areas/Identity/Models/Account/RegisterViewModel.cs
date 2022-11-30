@@ -35,5 +35,25 @@ namespace App.Areas.Identity.Models.AccountViewModels
         [StringLength(100, ErrorMessage = "{0} phải dài từ {2} đến {1} ký tự.", MinimumLength = 3)]
         public string UserName { get; set; }
 
+        //[Required(ErrorMessage = "Phải nhập {0}")]
+        //[DataType(DataType.Text)]
+        //[Display(Name = "Tên đăng nhập")]
+        //[StringLength(100, ErrorMessage = "{0} phải dài từ {2} đến {1} ký tự.", MinimumLength = 3)]
+        //public string UserName { get; set; }
+        //[Required(ErrorMessage ="Phải nhập {0}")]
+        //[EmailAddress(ErrorMessage ="Phải nhập đúng định dạng {0}")]
+        //[Display(Name = "Địa chỉ Email")]
+        //public string Email { get; set; }
+        //[Required(ErrorMessage ="Không được để trông {0}")]
+        //[DataType(DataType.Password)]
+        //[StringLength(100,ErrorMessage ="Mật khẩu phải dài từ {2} đến {1} ký tự", MinimumLength  = 6)]
+        //[Display(Name ="Mật khẩu")]
+        //public string Password { get; set; }
+        //[Required(ErrorMessage ="Lặp lại mật khẩu ")]
+        //[DataType(DataType.Password)]
+        //[Compare("Password",ErrorMessage ="Mật khẩu không trùng khớp")]
+        //[Display(Name = "Lặp lại mật khẩu")]
+        //public string ConfirmPassword { get; set; }
+
     }
 }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Manage.ApplicationCore.DI.CategoryAction
 {
-    public class CategoryServices : BaseReposServices<Category>, ICategory
+    public class CategoryServices : BaseReposServices<CategoryCy>, ICategory
     {
         public CategoryServices(Microsoft.Extensions.Configuration.IConfiguration configuration, IActionGeneral IActionGeneral) : base(configuration, IActionGeneral)
         {
@@ -47,7 +47,7 @@ namespace Manage.ApplicationCore.DI.CategoryAction
 
             return string.Join(" AND ", cauDieuKienAND);
         }
-        public async Task<MethodResult<List<Category>>> GetListEntity(CategoryQuery queryData)
+        public async Task<MethodResult<List<CategoryCy>>> GetListEntity(CategoryQuery queryData)
         {
             using (var conn = GetOpenConnection())
             {
@@ -66,14 +66,14 @@ namespace Manage.ApplicationCore.DI.CategoryAction
                         queryCount = $" WHERE {queryData.buildQuery}";
 
                     var count = await conn.QueryAsync<int>($"SELECT COUNT(*) FROM {_tableName}{queryCount}");
-                    List<Category> listItem = (await conn.QueryAsync<Category>(getList)).ToList();
+                    List<CategoryCy> listItem = (await conn.QueryAsync<CategoryCy>(getList)).ToList();
 
-                    return MethodResult<List<Category>>.ResultWithData(listItem, "Thành công!", count.FirstOrDefault());
+                    return MethodResult<List<CategoryCy>>.ResultWithData(listItem, "Thành công!", count.FirstOrDefault());
                 }
                 catch (Exception e)
                 {
                     LogData.LogErr($"Lỗi lấy danh sách {_tableName}", e.Message);
-                    return MethodResult<List<Category>>.ResultWithError(e.ToString());
+                    return MethodResult<List<CategoryCy>>.ResultWithError(e.ToString());
                 }
 
             }

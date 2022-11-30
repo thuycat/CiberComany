@@ -12,7 +12,7 @@ using EProductMain.Data.Entities;
 
 namespace Manage.ApplicationCore.DI.ProductAction
 {
-    public class ProductServices : BaseReposServices<Product>, IProduct
+    public class ProductServices : BaseReposServices<ProductCy>, IProduct
     {
         public ProductServices(Microsoft.Extensions.Configuration.IConfiguration configuration, IActionGeneral IActionGeneral) : base(configuration, IActionGeneral)
         {
@@ -77,7 +77,7 @@ namespace Manage.ApplicationCore.DI.ProductAction
            
         }
 
-        public async Task<MethodResult<List<Product>>> GetListEntity(ProductQuery queryData)
+        public async Task<MethodResult<List<ProductCy>>> GetListEntity(ProductQuery queryData)
         {
             using (var conn = GetOpenConnection())
             {
@@ -97,13 +97,13 @@ namespace Manage.ApplicationCore.DI.ProductAction
                         queryCount = $" WHERE {queryData.buildQuery}";
 
                     var count = await conn.QueryAsync<int>($"SELECT COUNT(*) FROM {_tableName}{queryCount}");
-                    List<Product> listItem = (await conn.QueryAsync<Product>(getList)).ToList();
+                    List<ProductCy> listItem = (await conn.QueryAsync<ProductCy>(getList)).ToList();
                     stopwatch.Stop();
-                    return MethodResult<List<Product>>.ResultWithData(listItem, "thêm mới thành công trong " + stopwatch.Elapsed, count.FirstOrDefault());
+                    return MethodResult<List<ProductCy>>.ResultWithData(listItem, "thêm mới thành công trong " + stopwatch.Elapsed, count.FirstOrDefault());
                 }
                 catch (Exception e)
                 {
-                    return MethodResult<List<Product>>.ResultWithError(e.ToString());
+                    return MethodResult<List<ProductCy>>.ResultWithError(e.ToString());
                 }
 
             }

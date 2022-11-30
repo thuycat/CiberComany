@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using EProductMain.Data.Entities;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,14 @@ namespace AppProject.Middlewares
     public class Middleware
     {
         private readonly RequestDelegate _next;
+        //private readonly SignInManager<AppUser> _SignInManager;
+      //  private readonly UserManager<AppUser> _UserManager;
 
-        public Middleware(RequestDelegate next)
+        public Middleware(RequestDelegate next/*, SignInManager<AppUser> SignInManager*/)
         {
             _next = next;
+          //  _SignInManager = SignInManager;
+          //  _UserManager = UserManager;
         }
 
         public Task Invoke(HttpContext httpContext)
@@ -33,6 +39,20 @@ namespace AppProject.Middlewares
                     httpContext.Response.Redirect("/Login");
                 }
             }
+            //if (path != "" && path.StartsWith("/Login"))
+            //{
+                //using (var scope = app.ApplicationServices.CreateScope())
+                //{
+                //    //Resolve ASP .NET Core Identity with DI help
+                //    var userManager = (UserManager<AppUser>)scope.ServiceProvider.GetService(typeof(UserManager<AppUser>));
+                //    // do you things here
+                //}
+            //    if (_SignInManager.IsSignedIn(httpContext.User))
+            //    {
+            //        //di chuyển đến trang login
+            //        httpContext.Response.Redirect("/");
+            //    }
+            //}
             return _next(httpContext);
         }
     }

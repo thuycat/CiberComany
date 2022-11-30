@@ -53,7 +53,7 @@ namespace AppProject
             services.AddCustomService(Configuration);
             //đăng ýk Identity
             // services.AddDbContext<CyBerDBContext>();
-            var _connectionString = Configuration.GetConnectionString("SqlConnectionString");
+            var _connectionString = Configuration.GetConnectionString("SqlConnectionString2");
             services.AddDbContext<CyBerDBContext>(option => option.UseSqlServer(_connectionString));
             services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<CyBerDBContext>()
@@ -99,6 +99,22 @@ namespace AppProject
                // options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.AccessDeniedPath = "/khongduoctruycap.html";
             });
+            //đăng ký sử dụng đăng nhập ngoài => 63
+
+            //services.AddAuthentication()
+            //    .AddGoogle(options =>
+            //    {
+            //     var google=   Configuration.GetSection("Authentication:Google");
+            //        options.ClientId = google["ClientId"];
+            //        options.ClientSecret = google["ClientSecret"];
+            //        options.CallbackPath = "/dang-nhap-tu-google";
+            //        //=> dùng cái mặc định
+
+            //    })
+            //    .AddFacebook()
+            //    .AddCookie()
+            //    .AddTwitter()
+            //    ;
             
         }
 
@@ -117,7 +133,7 @@ namespace AppProject
             }
             //session
             app.UseSession();
-            app.UseMiddleware<Middleware>();
+            //app.UseMiddleware<Middleware>();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

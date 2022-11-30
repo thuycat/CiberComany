@@ -548,6 +548,7 @@ function refreshGrid(gridName) {
     }
 }
 function AddFormDialog(urlLoad, width, title, odata, isnotcenter) {
+    debugger;
     var maxHeight = $(window).height();
     var maxwidth = $(window).width();
     var $focusing = $focused;
@@ -645,6 +646,7 @@ function AddFormDialog(urlLoad, width, title, odata, isnotcenter) {
     //});
 }
 function AddFormDialogV21(urlLoad, width, title, odata) {
+    debugger;
     var maxHeight = $(window).height();
     var maxwidth = $(window).width();
     if (odata == undefined)
@@ -715,6 +717,7 @@ function AddFormDialogV21(urlLoad, width, title, odata) {
 
 }
 function AddFormDialogV2(urlLoad, width, title, odata) {
+    debugger;
     var maxHeight = $(window).height();
     var maxwidth = $(window).width();
     if (odata == undefined)

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Manage.ApplicationCore.DI.OrderAction
 {
-   public interface IOrder:IBaseRepos<Order>
+   public interface IOrder:IBaseRepos<OrderCys>
     {
-        Task<MethodResult<List<Order>>> GetListEntity(OrdersQuery queryData);
+        Task<MethodResult<List<OrderCys>>> GetListEntity(OrdersQuery queryData);
         Task<MethodResult<List<OrderJson>>> GetListJson(OrdersQuery queryData);
         Task<MethodResult<List<OrderJson>>> GetListJson2(OrdersQuery queryData);
         string BuildCauDieuKien(OrdersQuery OrdersQuery);
